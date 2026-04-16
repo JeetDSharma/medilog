@@ -1,5 +1,5 @@
 import React from "react"
-import Header from "../../components/Header"
+import DashboardLayout from "../../components/DashboardLayout"
 import styles from "../../public/static/css/doctor/DoctorPatientCheck.module.css"
 import {
   Modal,
@@ -12,7 +12,6 @@ import {
   Button,
   InputGroup,
 } from "react-bootstrap"
-import SideBar from "../../components/sideBar/SideBarDoctorDash"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { AiOutlineQrcode } from "react-icons/ai"
@@ -94,11 +93,7 @@ const DoctorPatientCheck = () => {
     }
   }
   return (
-    <>
-      <Header />
-      <Row className={ styles.mainContainerDashRow }>
-        <SideBar />
-        <Col className={ styles.mainContainerDashCol }>
+    <DashboardLayout role="doctor">
           <Container className={ styles.mainContainerDash }>
             <Card className={ styles.mainCard }>
               <Form onSubmit={ submitHandler }>
@@ -184,9 +179,7 @@ const DoctorPatientCheck = () => {
               </Form>
             </Card>
           </Container>
-        </Col>
-      </Row>
-    </>
+    </DashboardLayout>
   )
 }
 

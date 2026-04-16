@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../../public/static/css/admin/AddAManufacturer.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Header from "../../components/Header";
+import DashboardLayout from "../../components/DashboardLayout"
 import {
   Card,
   Modal,
@@ -11,12 +11,11 @@ import {
   Container,
   Button,
 } from "react-bootstrap";
-import SideBar from "../../components/sideBar/SideBarAdminDash";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { ethers } from "ethers";
 import medicine from "../../HardHat/artifacts/contracts/medicine.sol/Medicine.json";
-import { medicineAdd, prescribeAdd } from "../constants";
+import { medicineAdd, prescribeAdd } from "../../lib/contractAddresses"
 import { resolve } from "styled-jsx/css";
 const AdminDashboardAddManufacturer = () => {
   //lcoalhost address
@@ -118,11 +117,7 @@ const AdminDashboardAddManufacturer = () => {
     });
   };
   return (
-    <>
-      <Header />
-      <Row className={styles.mainContainerDashRow}>
-        <SideBar />
-        <Col className={styles.mainContainerDashCol}>
+    <DashboardLayout role="admin">
           <Container className={styles.mainContainerDash}>
             <Container className={styles.containerForm}></Container>
             <Card className={styles.cardFormContainer}>
@@ -253,9 +248,7 @@ const AdminDashboardAddManufacturer = () => {
               </Modal>
             </Card>
           </Container>
-        </Col>
-      </Row>
-    </>
+    </DashboardLayout>
   );
 };
 

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Header from "../../components/Header";
+import DashboardLayout from "../../components/DashboardLayout"
 import styles from "../../public/static/css/admin/ManufacturerView.module.css";
 import { Table, Form, Row, Col, Container, Button } from "react-bootstrap";
-import SideBar from "../../components/sideBar/SideBarAdminDash";
 import Link from "next/link";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { useRouter } from "next/navigation";
@@ -49,11 +48,7 @@ const ManufacturerView = () => {
     sendrequest();
   }, []);
   return (
-    <>
-      <Header />
-      <Row className={styles.mainContainerDashRow}>
-        <SideBar />
-        <Col className={styles.mainContainerDashCol}>
+    <DashboardLayout role="admin">
           <Container className={styles.mainContainerDash}>
             <Container className={styles.formContainerSearch}>
               <Form className={["d-flex", styles.mainSearchForm]}>
@@ -120,9 +115,7 @@ const ManufacturerView = () => {
               </tbody>
             </Table>
           </Container>
-        </Col>
-      </Row>
-    </>
+    </DashboardLayout>
   );
 };
 

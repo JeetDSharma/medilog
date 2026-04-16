@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Header from "../../components/Header";
+import DashboardLayout from "../../components/DashboardLayout"
 import styles from "../../public/static/css/doctor/DoctorGivePrescription.module.css";
 import {
   Button,
@@ -14,13 +14,12 @@ import {
   Dropdown,
   Modal,
 } from "react-bootstrap";
-import SideBar from "../../components/sideBar/SideBarDoctorDash";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import { AiOutlineQrcode } from "react-icons/ai";
 import { QrReader } from "react-qr-reader";
 import { ethers } from "ethers";
-import { prescribeAdd } from "../constants";
+import { prescribeAdd } from "../../lib/contractAddresses"
 import prescribe from "../../HardHat/artifacts/contracts/prescribe_medicine.sol/Prescription.json";
 const DoctorDash = () => {
   const router = useRouter();
@@ -176,11 +175,7 @@ const DoctorDash = () => {
     });
   };
   return (
-    <>
-      <Header />
-      <Row className={styles.mainContainerDashRow}>
-        <SideBar />
-        <Col className={styles.mainContainerDashCol}>
+    <DashboardLayout role="doctor">
           <Container className={styles.mainContainerDash}>
             <Card className={styles.cardFormContainer}>
               <Form onSubmit={handleSubmit}>
@@ -394,9 +389,7 @@ const DoctorDash = () => {
               </Form>
             </Card>
           </Container>
-        </Col>
-      </Row>
-    </>
+    </DashboardLayout>
   );
 };
 export default DoctorDash;

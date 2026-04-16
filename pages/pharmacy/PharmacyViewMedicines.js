@@ -1,9 +1,7 @@
 import React from "react"
-import Header from "../../components/Header"
+import DashboardLayout from "../../components/DashboardLayout"
 import styles from "../../public/static/css/pharmacy/PharmacyViewMedicines.module.css"
 import { Table, Form, Row, Col, Container, Button } from "react-bootstrap"
-import SideBar from "../../components/sideBar/SideBarPharmacyDash"
-
 const MedicineList = [
   {
     key: "1",
@@ -40,11 +38,7 @@ const MedicineList = [
 ]
 const PharmacyViewMedicine = () => {
   return (
-    <>
-      <Header />
-      <Row className={ styles.mainContainerDashRow }>
-        <SideBar />
-        <Col className={ styles.mainContainerDashCol }>
+    <DashboardLayout role="pharmacy">
           <Container className={ styles.mainContainerDash }>
             <Container className={ styles.formContainerSearch }>
               <Form className={ ["d-flex", styles.mainSearchForm] }>
@@ -85,9 +79,7 @@ const PharmacyViewMedicine = () => {
               </tbody>
             </Table>
           </Container>
-        </Col>
-      </Row>
-    </>
+    </DashboardLayout>
   )
 }
 

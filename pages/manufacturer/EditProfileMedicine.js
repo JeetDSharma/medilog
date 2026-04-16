@@ -1,9 +1,8 @@
 import React from "react"
 import styles from "../../public/static/css/manufacturer/EditProfileMedicine.module.css"
 import "bootstrap/dist/css/bootstrap.min.css"
-import Header from "../../components/Header"
+import DashboardLayout from "../../components/DashboardLayout"
 import { Card, Form, Row, Col, Container, Button } from "react-bootstrap"
-import SideBar from "../../components/sideBar/SideBarManufacturerDash"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { AiOutlineReload } from "react-icons/ai"
@@ -80,11 +79,7 @@ const EditProfileMedicine = () => {
     router.push("/manufacturer/ManufacturerViewMedicine")
   }
   return (
-    <>
-      <Header />
-      <Row className={styles.mainContainerDashRow}>
-        <SideBar />
-        <Col className={styles.mainContainerDashCol}>
+    <DashboardLayout role="manufacturer">
           <Container className={styles.mainContainerDash}>
             <Container className={styles.containerForm}></Container>
             <Card className={styles.cardFormContainer}>
@@ -201,9 +196,7 @@ const EditProfileMedicine = () => {
               </Form>
             </Card>
           </Container>
-        </Col>
-      </Row>
-    </>
+    </DashboardLayout>
   );
 }
 

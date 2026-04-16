@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react"
-import Header from "../../components/Header"
+import DashboardLayout from "../../components/DashboardLayout"
 import styles from "../../public/static/css/patient/PatientViewPrescriptionList.module.css"
 import { Accordion, Container, Button, Card, Row, Col } from "react-bootstrap"
-import SideBar from "../../components/sideBar/SideBarPatientDash"
-
 const prescriptionSample = [
   {
     id: 1,
@@ -46,11 +44,7 @@ const PatientViewPrescription = () => {
   }, [])
 
   return (
-    <>
-      <Header />
-      <Row className={ styles.mainContainerDashRow }>
-        <SideBar />
-        <Col className={ styles.mainContainerDashCol }>
+    <DashboardLayout role="patient">
           <Container className={ styles.mainContainerDash }>
             <Card className={ styles.mainCardContainer }>
               Prescriptions For Wallet Address : 0x1234567890
@@ -70,9 +64,7 @@ const PatientViewPrescription = () => {
               </Accordion>
             </Card>
           </Container>
-        </Col>
-      </Row>
-    </>
+    </DashboardLayout>
   )
 }
 

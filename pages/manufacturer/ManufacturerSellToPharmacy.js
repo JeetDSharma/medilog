@@ -1,5 +1,5 @@
 import React from "react"
-import Header from "../../components/Header"
+import DashboardLayout from "../../components/DashboardLayout"
 import styles from "../../public/static/css/manufacturer/ManufacturerSellToPharmacy.module.css"
 import {
   Modal,
@@ -10,7 +10,6 @@ import {
   Button,
   Dropdown,
 } from "react-bootstrap"
-import SideBar from "../../components/sideBar/SideBarManufacturerDash"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { AiOutlineQrcode } from "react-icons/ai"
@@ -74,11 +73,7 @@ const ManufacturerDash = () => {
     // setShow(true)
   }
   return (
-    <>
-      <Header />
-      <Row className={ styles.mainContainerDashRow }>
-        <SideBar />
-        <Col className={ styles.mainContainerDashCol }>
+    <DashboardLayout role="manufacturer">
           <Container className={ styles.mainContainerDash }>
             <Form onSubmit={ handleSubmit }>
               <Form.Group as={ Row } className="mb-3">
@@ -149,9 +144,7 @@ const ManufacturerDash = () => {
               </Modal.Footer>
             </Modal>
           </Container>
-        </Col>
-      </Row>
-    </>
+    </DashboardLayout>
   )
 }
 

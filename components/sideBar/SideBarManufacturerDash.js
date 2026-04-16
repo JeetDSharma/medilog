@@ -1,9 +1,9 @@
 import React from "react"
 import { Button, Container } from "react-bootstrap"
 import styles from "../../public/static/css/components/sidebar.module.css"
-import Link from "next/link"
 import * as FaIcons from "react-icons/fa"
-import * as IoIcons from "react-icons/io"
+import SidebarLink from "./SidebarLink"
+
 const SideBar = () => {
   const connectWallet = async () => {
     if (window.ethereum) {
@@ -14,78 +14,41 @@ const SideBar = () => {
   }
   return (
     <Container className={ styles.mainContainerSidebar }>
-      <Button
-        className={ styles.navigationButtons }
-        variant="light"
-        onClick={ connectWallet }
-      >
-        <div className={ styles.NavContent }>
-          <FaIcons.FaWallet className={ styles.SideBarIcons } />
-          Connect Wallet
-        </div>
-      </Button>{ " " }
-      <Link href="/manufacturer/ManufacturerDashboard">
-        <Button className={ styles.navigationButtons } variant="light">
+      <div className={ styles.roleEyebrow }>Manufacturer</div>
+      <div className={ styles.walletBlock }>
+        <Button
+          className={ styles.navigationButtons }
+          variant="light"
+          onClick={ connectWallet }
+        >
           <div className={ styles.NavContent }>
-            <FaIcons.FaTachometerAlt
-              className={ styles.SideBarIcons }
-            />
-            Dashboard
+            <FaIcons.FaWallet className={ styles.SideBarIcons } />
+            Connect Wallet
           </div>
-        </Button>{ " " }
-      </Link>
-      <Link href="/manufacturer/ManufacturerProfile">
-        <Button className={ styles.navigationButtons } variant="light">
-          <div className={ styles.NavContent }>
-            <FaIcons.FaUser className={ styles.SideBarIcons } />
-            My Profile
-          </div>
-        </Button>{ " " }
-      </Link>
-      <Link href="/manufacturer/ManufacturerInventory">
-        <Button className={ styles.navigationButtons } variant="light">
-          <div className={ styles.NavContent }>
-            <FaIcons.FaHome className={ styles.SideBarIcons } />
-            My Inventory
-          </div>
-        </Button>{ " " }
-      </Link>
-      <Link href="/manufacturer/ManufacturerCreateBill">
-        <Button className={ styles.navigationButtons } variant="light">
-          <div className={ styles.NavContent }>
-            <FaIcons.FaPencilAlt className={ styles.SideBarIcons } />
-            Create Bill
-          </div>
-        </Button>{ " " }
-      </Link>
-      <Link href="/manufacturer/ManufacturerViewMedicine">
-        <Button className={ styles.navigationButtons } variant="light">
-          <div className={ styles.NavContent }>
-            <FaIcons.FaEye className={ styles.SideBarIcons } />
-            View Medicine List
-          </div>
-        </Button>{ " " }
-      </Link>
-      <Link href="/manufacturer/ManufacturerProduceMedicine">
-        <Button className={ styles.navigationButtons } variant="light">
-          <div className={ styles.NavContent }>
-            <FaIcons.FaShoppingBag
-              className={ styles.SideBarIcons }
-            />
-            Produce Medicine
-          </div>
-        </Button>{ " " }
-      </Link>
-      <Link href="/manufacturer/ManufacturerAddDrug">
-        <Button className={ styles.navigationButtons } variant="light">
-          <div className={ styles.NavContent }>
-            <FaIcons.FaPlus
-              className={ styles.SideBarIcons }
-            />
-            Add Drug
-          </div>
-        </Button>{ " " }
-      </Link>
+        </Button>
+      </div>
+      <div className={ styles.navDivider } />
+      <SidebarLink href="/manufacturer/ManufacturerDashboard" icon={ FaIcons.FaTachometerAlt }>
+        Dashboard
+      </SidebarLink>
+      <SidebarLink href="/manufacturer/ManufacturerProfile" icon={ FaIcons.FaUser }>
+        My Profile
+      </SidebarLink>
+      <SidebarLink href="/manufacturer/ManufacturerInventory" icon={ FaIcons.FaHome }>
+        My Inventory
+      </SidebarLink>
+      <SidebarLink href="/manufacturer/ManufacturerCreateBill" icon={ FaIcons.FaPencilAlt }>
+        Create Bill
+      </SidebarLink>
+      <SidebarLink href="/manufacturer/ManufacturerViewMedicine" icon={ FaIcons.FaEye }>
+        View Medicine List
+      </SidebarLink>
+      <SidebarLink href="/manufacturer/ManufacturerProduceMedicine" icon={ FaIcons.FaShoppingBag }>
+        Produce Medicine
+      </SidebarLink>
+      <SidebarLink href="/manufacturer/ManufacturerAddDrug" icon={ FaIcons.FaPlus }>
+        Add Drug
+      </SidebarLink>
     </Container>
   )
 }

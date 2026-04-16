@@ -1,0 +1,22 @@
+/* Shared shell for all role dashboard pages */
+
+.mainContainerDashRow {
+	padding: 0;
+	margin: 0;
+	min-height: 100vh;
+	background: #fff;
+}
+
+.mainContainerDashCol {
+	padding: 0;
+	margin: 0;
+	flex: 1;
+	min-width: 0;
+}
+
+.dashCanvas {
+	background: #fff;
+	min-height: calc(100vh - 72px);
+	padding-top: 72px;
+	width: 100%;
+}

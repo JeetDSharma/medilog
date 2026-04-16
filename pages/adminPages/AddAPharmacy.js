@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../../public/static/css/admin/AddAPharmacy.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Header from "../../components/Header";
+import DashboardLayout from "../../components/DashboardLayout"
 import {
   Card,
   Modal,
@@ -11,10 +11,9 @@ import {
   Container,
   Button,
 } from "react-bootstrap";
-import SideBar from "../../components/sideBar/SideBarAdminDash";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { prescribeAdd, medicineAdd, dispenseAdd } from "../constants";
+import { prescribeAdd, medicineAdd, dispenseAdd } from "../../lib/contractAddresses"
 import { ethers } from "ethers";
 import dispense from "../../HardHat/artifacts/contracts/dispense_medicine.sol/DispenseMedicine.json";
 const AdminDashboardAddPharmacy = () => {
@@ -102,11 +101,7 @@ const AdminDashboardAddPharmacy = () => {
   };
 
   return (
-    <>
-      <Header />
-      <Row className={styles.mainContainerDashRow}>
-        <SideBar />
-        <Col className={styles.mainContainerDashCol}>
+    <DashboardLayout role="admin">
           <Container className={styles.mainContainerDash}>
             <Container className={styles.containerForm}></Container>
             <Card className={styles.cardFormContainer}>
@@ -237,9 +232,7 @@ const AdminDashboardAddPharmacy = () => {
               </Modal>
             </Card>
           </Container>
-        </Col>
-      </Row>
-    </>
+    </DashboardLayout>
   );
 };
 

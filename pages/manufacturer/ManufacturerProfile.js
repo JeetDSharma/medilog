@@ -1,8 +1,7 @@
 import React from "react"
-import Header from "../../components/Header"
+import DashboardLayout from "../../components/DashboardLayout"
 import styles from "../../public/static/css/manufacturer/ManufacturerProfile.module.css"
 import { Table, Row, Col, Container, Card } from "react-bootstrap"
-import SideBar from "../../components/sideBar/SideBarManufacturerDash"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 
@@ -37,11 +36,7 @@ const ManufacturerDash = () => {
     requestDataManufacturer()
   }, [])
   return (
-    <>
-      <Header />
-      <Row className={ styles.mainContainerDashRow }>
-        <SideBar />
-        <Col className={ styles.mainContainerDashCol }>
+    <DashboardLayout role="manufacturer">
           <Container className={ styles.mainContainerDash }>
             <Card className={ styles.mainCard }>
               <Card.Body>
@@ -112,9 +107,7 @@ const ManufacturerDash = () => {
               </Card.Body>
             </Card>
           </Container>
-        </Col>
-      </Row>
-    </>
+    </DashboardLayout>
   )
 }
 

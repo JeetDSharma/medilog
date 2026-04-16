@@ -1,9 +1,8 @@
 import React from "react"
 import styles from "../../public/static/css/admin/EditProfileManufacturer.module.css"
 import "bootstrap/dist/css/bootstrap.min.css"
-import Header from "../../components/Header"
+import DashboardLayout from "../../components/DashboardLayout"
 import { Card, Form, Row, Col, Container, Button } from "react-bootstrap"
-import SideBar from "../../components/sideBar/SideBarAdminDash"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { AiOutlineReload } from "react-icons/ai"
@@ -78,11 +77,7 @@ const EditProfileManufacturer = () => {
     router.push("/adminPages/ManufacturerView")
   }
   return (
-    <>
-      <Header />
-      <Row className={styles.mainContainerDashRow}>
-        <SideBar />
-        <Col className={styles.mainContainerDashCol}>
+    <DashboardLayout role="admin">
           <Container className={styles.mainContainerDash}>
             <Container className={styles.containerForm}></Container>
             <Card className={styles.cardFormContainer}>
@@ -182,9 +177,7 @@ const EditProfileManufacturer = () => {
               </Form>
             </Card>
           </Container>
-        </Col>
-      </Row>
-    </>
+    </DashboardLayout>
   );
 }
 

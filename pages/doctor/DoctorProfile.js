@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react"
-import Header from "../../components/Header"
+import DashboardLayout from "../../components/DashboardLayout"
 import styles from "../../public/static/css/doctor/DoctorProfile.module.css"
 import { Table, Row, Col, Container, Button, Card } from "react-bootstrap"
-import SideBar from "../../components/sideBar/SideBarDoctorDash"
 import { useRouter } from "next/router"
 //c
 const DoctorProfile = () => {
@@ -36,11 +35,7 @@ const DoctorProfile = () => {
     requestDataDoctor()
   }, [])
   return (
-    <>
-      <Header />
-      <Row className={ styles.mainContainerDashRow }>
-        <SideBar />
-        <Col className={ styles.mainContainerDashCol }>
+    <DashboardLayout role="doctor">
           <Container className={ styles.mainContainerDash }>
             <Card className={ styles.mainCard }>
               <Card.Body>
@@ -107,9 +102,7 @@ const DoctorProfile = () => {
               </Card.Body>
             </Card>
           </Container>
-        </Col>
-      </Row>
-    </>
+    </DashboardLayout>
   )
 }
 

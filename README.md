@@ -82,7 +82,7 @@ The API listens on `SERVERPORT` and connects with `MONGOCONNECTIONURL`.
 
 ### 3. Configure the frontend / blockchain addresses
 
-Contract addresses used by the app are exported from `pages/constants.js`. After you deploy contracts (local Hardhat node or a testnet), update the `medicineAdd`, `prescribeAdd`, `dispenseAdd`, and `saleAdd` values to match your deployment.
+Contract addresses used by the app are exported from `lib/contractAddresses.js`. After you deploy contracts (local Hardhat node or a testnet), update the `medicineAdd`, `prescribeAdd`, `dispenseAdd`, and `saleAdd` values to match your deployment.
 
 The shared Web3 helper in `ethereum/web3.js` uses a browser provider when available; otherwise it falls back to an HTTP provider. For production or shared deployments, point this at your own RPC endpoint and avoid committing secrets.
 

@@ -1,6 +1,6 @@
 import React from "react"
+import DashboardLayout from "../../components/DashboardLayout"
 import styles from "../../public/static/css/manufacturer/ManufacturerCreateBill.module.css"
-import Header from "../../components/Header"
 import {
   Card,
   Form,
@@ -10,7 +10,6 @@ import {
   Modal,
   Button,
 } from "react-bootstrap"
-import SideBar from "../../components/sideBar/SideBarManufacturerDash"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 
@@ -39,11 +38,7 @@ const ManufacturerDashAddDrug = () => {
     setShow(true)
   }
   return (
-    <>
-      <Header />
-      <Row className={ styles.mainContainerDashRow }>
-        <SideBar />
-        <Col className={ styles.mainContainerDashCol }>
+    <DashboardLayout role="manufacturer">
           <Container className={ styles.mainContainerDash }>
             <Container className={ styles.containerForm }></Container>
             <Card className={ styles.cardFormContainer }>
@@ -169,9 +164,7 @@ const ManufacturerDashAddDrug = () => {
               </Form>
             </Card>
           </Container>
-        </Col>
-      </Row>
-    </>
+    </DashboardLayout>
   )
 }
 

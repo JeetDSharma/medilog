@@ -1,6 +1,6 @@
 import React from "react";
+import DashboardLayout from "../../components/DashboardLayout"
 import styles from "../../public/static/css/manufacturer/ManufacturerDashAddDrug.module.css";
-import Header from "../../components/Header";
 import {
   Form,
   Row,
@@ -11,11 +11,10 @@ import {
   Dropdown,
   Card,
 } from "react-bootstrap";
-import SideBar from "../../components/sideBar/SideBarManufacturerDash";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { ethers } from "ethers";
-import { medicineAdd } from "../constants";
+import { medicineAdd } from "../../lib/contractAddresses"
 import medicine from "../../HardHat/artifacts/contracts/medicine.sol/Medicine.json";
 
 const ManufacturerDashAddDrug = () => {
@@ -107,11 +106,7 @@ const ManufacturerDashAddDrug = () => {
     });
   };
   return (
-    <>
-      <Header />
-      <Row className={styles.mainContainerDashRow}>
-        <SideBar />
-        <Col className={styles.mainContainerDashCol}>
+    <DashboardLayout role="manufacturer">
           <Container className={styles.mainContainerDash}>
             <Container className={styles.containerForm}></Container>
             <Card className={styles.cardFormContainer}>
@@ -250,9 +245,7 @@ const ManufacturerDashAddDrug = () => {
               </Form>
             </Card>
           </Container>
-        </Col>
-      </Row>
-    </>
+    </DashboardLayout>
   );
 };
 

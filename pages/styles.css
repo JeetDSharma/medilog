@@ -12,6 +12,9 @@
 	--dash-border: 1.5px solid #000000;
 	--radius-pill: 999px;
 	--radius-card: 24px;
+	--transition-fast: 0.15s ease;
+	--shadow-pill: 3px 3px 0 #000;
+	--shadow-card: 6px 6px 0 #000;
 	--background-gradient: linear-gradient(
 		var(--primary-color),
 		var(--secondary-color)
@@ -42,4 +45,81 @@ body {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
 	background: #555;
+}
+
+/* M54 dashboard shell — scoped via data attribute from DashboardLayout */
+[data-m54-dashboard="true"] .form-control,
+[data-m54-dashboard="true"] input.form-control,
+[data-m54-dashboard="true"] textarea.form-control,
+[data-m54-dashboard="true"] select.form-select {
+	border-radius: 16px;
+	border: 2px solid #000;
+	padding: 0.55rem 1rem;
+	font-weight: 500;
+	transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+[data-m54-dashboard="true"] .form-control:focus,
+[data-m54-dashboard="true"] input.form-control:focus {
+	border-color: #000;
+	box-shadow: 0 0 0 3px rgba(233, 245, 157, 0.9);
+}
+
+[data-m54-dashboard="true"] .btn-primary {
+	border-radius: var(--radius-pill);
+	border: 2px solid #000;
+	background: linear-gradient(180deg, #fdfd96 0%, #e9f59d 100%);
+	color: #000;
+	font-weight: 800;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	font-size: 0.75rem;
+	padding: 0.5rem 1.25rem;
+	box-shadow: var(--shadow-pill);
+}
+
+[data-m54-dashboard="true"] .btn-primary:hover {
+	background: #fdfd96;
+	color: #000;
+	border-color: #000;
+	transform: translate(-1px, -1px);
+	box-shadow: 4px 4px 0 #000;
+}
+
+[data-m54-dashboard="true"] .btn-outline-primary,
+[data-m54-dashboard="true"] .btn-outline-success,
+[data-m54-dashboard="true"] .btn-outline-secondary {
+	border-radius: var(--radius-pill);
+	border-width: 2px;
+	font-weight: 700;
+}
+
+[data-m54-dashboard="true"] .table {
+	border-collapse: separate;
+	border-spacing: 0;
+	border: 2px solid #000;
+	border-radius: 16px;
+	overflow: hidden;
+}
+
+[data-m54-dashboard="true"] .table thead th {
+	background: #000;
+	color: #fff;
+	font-size: 0.65rem;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	border: none;
+	padding: 0.75rem 1rem;
+}
+
+[data-m54-dashboard="true"] .table tbody td {
+	vertical-align: middle;
+	border-color: #e5e5e5;
+}
+
+[data-m54-dashboard="true"] .card {
+	border-radius: var(--radius-card);
+	border: 2px solid #000;
+	box-shadow: var(--shadow-card);
+	overflow: hidden;
 }

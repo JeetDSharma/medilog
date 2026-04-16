@@ -1,6 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Header from "../../components/Header";
+import DashboardLayout from "../../components/DashboardLayout"
 import styles from "../../public/static/css/pharmacy/PharmacySellToPatient.module.css";
 import {
   Form,
@@ -14,14 +14,13 @@ import {
   InputGroup,
   Card,
 } from "react-bootstrap";
-import SideBar from "../../components/sideBar/SideBarPharmacyDash";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { AiOutlineQrcode, AiOutlinePlus } from "react-icons/ai";
 import { QrReader } from "react-qr-reader";
 import dispense from "../../HardHat/artifacts/contracts/dispense_medicine.sol/DispenseMedicine.json";
 import { ethers } from "ethers";
-import { dispenseAdd } from "../constants";
+import { dispenseAdd } from "../../lib/contractAddresses"
 const PharmacySellToPatient = () => {
   const [show, setShow] = useState(false);
   const [showListModal, setShowListModal] = useState(false);
@@ -224,11 +223,7 @@ const PharmacySellToPatient = () => {
     setFormData({ ...formData, SerialID: medicineList });
   };
   return (
-    <>
-      <Header />
-      <Row className={styles.mainContainerDashRow}>
-        <SideBar />
-        <Col className={styles.mainContainerDashCol}>
+    <DashboardLayout role="pharmacy">
           <Container className={styles.mainContainerDash}>
             <Card className={styles.cardFormContainer}>
               <Form onSubmit={handleSubmit}>
@@ -466,9 +461,7 @@ const PharmacySellToPatient = () => {
               </Form>
             </Card>
           </Container>
-        </Col>
-      </Row>
-    </>
+    </DashboardLayout>
   );
 };
 

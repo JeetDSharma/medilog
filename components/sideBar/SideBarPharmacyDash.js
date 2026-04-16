@@ -1,9 +1,9 @@
 import React from "react"
 import { Button, Container } from "react-bootstrap"
 import styles from "../../public/static/css/components/sidebar.module.css"
-import Link from "next/link"
 import * as FaIcons from "react-icons/fa"
-import * as IoIcons from "react-icons/io"
+import SidebarLink from "./SidebarLink"
+
 const SideBar = () => {
   const connectWallet = async () => {
     if (window.ethereum) {
@@ -14,58 +14,35 @@ const SideBar = () => {
   }
   return (
     <Container className={ styles.mainContainerSidebar }>
-      <Button
-        className={ styles.navigationButtons }
-        variant="light"
-        onClick={ connectWallet }
-      >
-        <div className={ styles.NavContent }>
-          <FaIcons.FaWallet className={ styles.SideBarIcons } />
-          Connect Wallet
-        </div>
-      </Button>{ " " }
-      <Link href="/pharmacy/PharmacyDashboard">
-        <Button className={ styles.navigationButtons } variant="light">
+      <div className={ styles.roleEyebrow }>Pharmacy</div>
+      <div className={ styles.walletBlock }>
+        <Button
+          className={ styles.navigationButtons }
+          variant="light"
+          onClick={ connectWallet }
+        >
           <div className={ styles.NavContent }>
-            <FaIcons.FaTachometerAlt
-              className={ styles.SideBarIcons }
-            />
-            Dashboard
+            <FaIcons.FaWallet className={ styles.SideBarIcons } />
+            Connect Wallet
           </div>
-        </Button>{ " " }
-      </Link>
-      <Link href="/pharmacy/PharmacyProfile">
-        <Button className={ styles.navigationButtons } variant="light">
-          <div className={ styles.NavContent }>
-            <FaIcons.FaUser className={ styles.SideBarIcons } />
-            My Profile
-          </div>
-        </Button>{ " " }
-      </Link>
-      <Link href="/pharmacy/PharmacyPatientCheck">
-        <Button className={ styles.navigationButtons } variant="light">
-          <div className={ styles.NavContent }>
-            <FaIcons.FaCheck className={ styles.SideBarIcons } />
-            Check Patient
-          </div>
-        </Button>{ " " }
-      </Link>
-      <Link href="/pharmacy/PharmacyViewMedicines">
-        <Button className={ styles.navigationButtons } variant="light">
-          <div className={ styles.NavContent }>
-            <FaIcons.FaMedkit className={ styles.SideBarIcons } />
-            Medicines
-          </div>
-        </Button>{ " " }
-      </Link>
-      <Link href="/pharmacy/PharmacySellToPatient">
-        <Button className={ styles.navigationButtons } variant="light">
-          <div className={ styles.NavContent }>
-            <FaIcons.FaPencilAlt className={ styles.SideBarIcons } />
-            Sell To Patient
-          </div>
-        </Button>{ " " }
-      </Link>
+        </Button>
+      </div>
+      <div className={ styles.navDivider } />
+      <SidebarLink href="/pharmacy/PharmacyDashboard" icon={ FaIcons.FaTachometerAlt }>
+        Dashboard
+      </SidebarLink>
+      <SidebarLink href="/pharmacy/PharmacyProfile" icon={ FaIcons.FaUser }>
+        My Profile
+      </SidebarLink>
+      <SidebarLink href="/pharmacy/PharmacyPatientCheck" icon={ FaIcons.FaCheck }>
+        Check Patient
+      </SidebarLink>
+      <SidebarLink href="/pharmacy/PharmacyViewMedicines" icon={ FaIcons.FaMedkit }>
+        Medicines
+      </SidebarLink>
+      <SidebarLink href="/pharmacy/PharmacySellToPatient" icon={ FaIcons.FaPencilAlt }>
+        Sell To Patient
+      </SidebarLink>
     </Container>
   )
 }

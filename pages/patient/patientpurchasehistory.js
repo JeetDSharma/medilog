@@ -1,17 +1,11 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Header from '../../components/Header'
+import DashboardLayout from "../../components/DashboardLayout"
 import styles from '../../public/static/css/patient/PatientPurchaseHistory.module.css'
 import { Container, Button, Card, Row, Col } from 'react-bootstrap'
-import SideBar from '../../components/sideBar/SideBarPatientDash'
-
 const PatientDash = () => {
   return (
-    <>
-      <Header />
-      <Row className={ styles.mainContainerDashRow }>
-        <SideBar />
-        <Col className={ styles.mainContainerDashCol }>
+    <DashboardLayout role="patient">
           <Container className={ styles.mainContainerDash }>
             <Card className={ styles.patientdash_buttoncss }>
               <Card.Header>History</Card.Header>
@@ -22,9 +16,7 @@ const PatientDash = () => {
               </Card.Body>
             </Card>
           </Container>
-        </Col>
-      </Row>
-    </>
+    </DashboardLayout>
   )
 }
 

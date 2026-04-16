@@ -1,8 +1,7 @@
 import React from "react"
-import Header from "../../components/Header"
+import DashboardLayout from "../../components/DashboardLayout"
 import styles from "../../public/static/css/pharmacy/PharmacyProfile.module.css"
 import { Row, Col, Container, Table, Card } from "react-bootstrap"
-import SideBar from "../../components/sideBar/SideBarPharmacyDash"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 
@@ -38,11 +37,7 @@ const PharmacyDash = () => {
   }, [])
 
   return (
-    <>
-      <Header />
-      <Row className={ styles.mainContainerDashRow }>
-        <SideBar />
-        <Col className={ styles.mainContainerDashCol }>
+    <DashboardLayout role="pharmacy">
           <Container className={ styles.mainContainerDash }>
             <Card className={ styles.mainCard }>
               <Card.Body>
@@ -113,9 +108,7 @@ const PharmacyDash = () => {
               </Card.Body>
             </Card>
           </Container>
-        </Col>
-      </Row>
-    </>
+    </DashboardLayout>
   )
 }
 
