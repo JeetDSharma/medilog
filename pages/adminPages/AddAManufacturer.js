@@ -48,7 +48,7 @@ const AdminDashboardAddManufacturer = () => {
       try {
         console.log("CALLED");
         const response = await fetch(
-          "http://localhost:5000/api/manufacturerAdd",
+          "http://localhost:5001/api/manufacturerAdd",
           {
             method: "POST",
             headers: {

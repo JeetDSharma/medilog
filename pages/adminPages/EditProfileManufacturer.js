@@ -16,7 +16,7 @@ const EditProfileManufacturer = () => {
       try {
         const { id } = router.query
         const response = await fetch(
-          "http://localhost:5000/api/manufacturerGetDetails",
+          "http://localhost:5001/api/manufacturerGetDetails",
           {
             method: "POST",
             headers: {
@@ -54,7 +54,7 @@ const EditProfileManufacturer = () => {
     event.preventDefault()
     try {
       const response = await fetch(
-        "http://localhost:5000/api/manufacturerUpdate",
+        "http://localhost:5001/api/manufacturerUpdate",
         {
           method: "POST",
           headers: {

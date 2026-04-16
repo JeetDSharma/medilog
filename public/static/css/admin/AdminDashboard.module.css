@@ -1,44 +1,219 @@
-.mainContainerDash {
-	padding-left: 200px;
-	padding-top: 100px;
-	padding-right: 50px;
+/* Admin dashboard — clean neo-brutalist / editorial layout (ref: high-contrast, pills, lime accent) */
 
-	margin-right: 0;
-	max-width: 90vw;
+.mainContainerDashRow {
+	padding: 0;
+	margin: 0;
+	min-height: 100vh;
+	background-color: var(--bg-color);
 }
+
 .mainContainerDashCol {
 	padding: 0;
 	margin: 0;
-	width: 10px;
-}
-.mainContainerDashRow {
-	padding: 0px;
-	margin: 0px;
-}
-.cardMain {
-	width: 250px;
-	padding-top: 20px;
-	padding-bottom: 20px;
-	margin-left: 20px;
-	margin-right: 30px;
-	text-align: center;
-	height: 150px;
-}
-.secondRowMain {
-	padding-top: 20px;
-	margin-left: 10px;
+	flex: 1;
+	min-width: 0;
 }
 
-.chartDiv {
-	width: 100px;
-	height: 100px;
+.mainContainerDash {
+	/* Clear fixed sidebar (~20vw, max 280px) */
+	padding-left: clamp(200px, 22vw, 300px);
+	padding-right: clamp(16px, 3vw, 40px);
+	padding-top: clamp(100px, 12vh, 140px);
+	padding-bottom: 3rem;
+	margin-right: 0;
+	max-width: 100%;
 }
-.CardTable {
-	margin-right: 10px;
-	text-align: center;
+
+.containerForm {
+	display: none;
 }
+
+.pageHeader {
+	margin-bottom: 2rem;
+	padding-bottom: 1.5rem;
+	border-bottom: var(--dash-border);
+}
+
+.pageKicker {
+	display: inline-block;
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	margin-bottom: 0.5rem;
+	padding: 0.35rem 0.85rem;
+	border-radius: var(--radius-pill);
+	border: 1px solid #000;
+	background: var(--accent);
+}
+
+.pageTitle {
+	font-size: clamp(1.75rem, 4vw, 2.5rem);
+	font-weight: 800;
+	letter-spacing: -0.03em;
+	line-height: 1.1;
+	margin: 0 0 0.5rem;
+	color: #000;
+}
+
+.pageSubtitle {
+	margin: 0;
+	max-width: 42ch;
+	font-size: 0.95rem;
+	font-weight: 500;
+	color: #444;
+	line-height: 1.5;
+}
+
+.statRow {
+	margin-left: 0;
+	margin-right: 0;
+	--bs-gutter-x: 1.25rem;
+}
+
+.statCol {
+	margin-bottom: 1.25rem;
+}
+
+.cardMain {
+	width: 100%;
+	min-height: 148px;
+	padding: 1.35rem 1.25rem;
+	margin: 0;
+	text-align: left;
+	border-radius: var(--radius-card) !important;
+	border: var(--dash-border) !important;
+	background: #fff !important;
+	box-shadow: 4px 4px 0 #000;
+	transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cardMain:hover {
+	transform: translate(-2px, -2px);
+	box-shadow: 6px 6px 0 #000;
+}
+
+.cardMain :global(.card-title) {
+	font-size: 0.7rem;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: #666;
+	margin-bottom: 0.75rem;
+}
+
+.cardMain :global(.card-text) {
+	font-size: 1.75rem;
+	font-weight: 800;
+	letter-spacing: -0.03em;
+	color: #000;
+	margin: 0;
+}
+
+.cardMain :global(.card-body) {
+	padding: 0;
+}
+
+.secondRowMain {
+	padding-top: 0.5rem;
+	margin-left: 0;
+	margin-right: 0;
+	--bs-gutter-x: 1.25rem;
+}
+
 .graphCard {
-	padding-left: 20px;
-	padding-top: 20px;
-	text-align: center;
+	padding: 1.5rem 1.25rem 1.25rem;
+	text-align: left;
+	border-radius: var(--radius-card) !important;
+	border: var(--dash-border) !important;
+	background: #fff !important;
+	box-shadow: 4px 4px 0 #000;
+	height: 100%;
+}
+
+.graphCard :global(.card-title) {
+	font-size: 1rem;
+	font-weight: 700;
+	letter-spacing: -0.02em;
+	margin-bottom: 1rem;
+	padding-bottom: 0.75rem;
+	border-bottom: 1px solid #000;
+}
+
+.graphCard :global(.card-body) {
+	padding: 0;
+	overflow-x: auto;
+}
+
+.CardTable {
+	margin-right: 0;
+	text-align: left;
+	border-radius: var(--radius-card) !important;
+	border: var(--dash-border) !important;
+	background: #fff !important;
+	box-shadow: 4px 4px 0 #000;
+	height: 100%;
+}
+
+.CardTable :global(.card-title) {
+	font-size: 1rem;
+	font-weight: 700;
+	letter-spacing: -0.02em;
+	margin-bottom: 1rem;
+	padding: 1.25rem 1.25rem 0;
+}
+
+.CardTable :global(.card-body) {
+	padding: 0 1.25rem 1.25rem;
+}
+
+.dataTable {
+	width: 100%;
+	margin-bottom: 0;
+	border-collapse: separate;
+	border-spacing: 0;
+	border: 1px solid #000;
+	border-radius: 16px;
+	overflow: hidden;
+	font-size: 0.9rem;
+}
+
+.dataTable thead th {
+	background: #000;
+	color: #fff;
+	font-weight: 600;
+	font-size: 0.72rem;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	padding: 0.85rem 1rem;
+	border: none;
+}
+
+.dataTable tbody td {
+	padding: 0.85rem 1rem;
+	border-bottom: 1px solid #e8e8e8;
+	vertical-align: middle;
+}
+
+.dataTable tbody tr:last-child td {
+	border-bottom: none;
+}
+
+.dataTable tbody tr:nth-child(even) {
+	background-color: #fafafa;
+}
+
+.dataTable tbody tr:hover td {
+	background-color: rgba(233, 245, 157, 0.35);
+}
+
+.salesPill {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.2rem 0.65rem;
+	border-radius: var(--radius-pill);
+	border: 1px solid #000;
+	font-weight: 600;
+	font-size: 0.8rem;
+	background: var(--accent);
 }

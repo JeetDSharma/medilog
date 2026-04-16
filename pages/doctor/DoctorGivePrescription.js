@@ -61,7 +61,7 @@ const DoctorDash = () => {
           console.log(`fetched address: ${address}`);
         }
         const response = await fetch(
-          "http://localhost:5000/api/doctorGetDetailByWallet",
+          "http://localhost:5001/api/doctorGetDetailByWallet",
           {
             method: "POST",
             headers: {
@@ -91,7 +91,7 @@ const DoctorDash = () => {
 
     const requestDataMedicine = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/medicinelist", {
+        const response = await fetch("http://localhost:5001/api/medicinelist", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

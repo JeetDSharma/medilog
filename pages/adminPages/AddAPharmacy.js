@@ -42,7 +42,7 @@ const AdminDashboardAddPharmacy = () => {
     if (res) {
       try {
         console.log("CALLED");
-        const response = await fetch("http://localhost:5000/api/pharmacyAdd", {
+        const response = await fetch("http://localhost:5001/api/pharmacyAdd", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

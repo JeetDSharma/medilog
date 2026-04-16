@@ -15,7 +15,7 @@ const AdminDashboard = () => {
     console.log(value)
     try {
       const response = await fetch(
-        "http://localhost:5000/api/doctorDelete",
+        "http://localhost:5001/api/doctorDelete",
         {
           method: "POST",
           headers: {
@@ -37,7 +37,7 @@ const AdminDashboard = () => {
     const sendrequest = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/doctorlist"
+          "http://localhost:5001/api/doctorlist"
         )
         const responseData = await response.json()
         console.log(responseData)

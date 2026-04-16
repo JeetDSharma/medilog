@@ -13,7 +13,7 @@ const DoctorViewMedicine = () => {
   useEffect(() => {
     const sendrequest = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/medicinelist')
+        const response = await fetch('http://localhost:5001/api/medicinelist')
         const responseData = await response.json()
         console.log(responseData)
         setLoadedMedicines(responseData)

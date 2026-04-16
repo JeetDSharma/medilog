@@ -1,22 +1,44 @@
 .mainNavbar {
-	height: 10vh;
-  width: 100vw;
+	height: auto;
+	min-height: 72px;
+	width: 100vw;
 	background-color: var(--primary-color);
 	position: fixed;
-  z-index: 10;
+	z-index: 10;
+	border-bottom: var(--dash-border);
+	box-shadow: none;
 }
 .mainContainer {
 	margin: 0;
-	padding: 30px;
+	padding: 0.75rem 1.5rem;
+	max-width: 100%;
 }
 .restNav {
-	padding-left: 70vw;
+	padding-left: clamp(1rem, 12vw, 70vw);
+	gap: 0.25rem;
+	align-items: center;
+}
+.logoSpace {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	text-decoration: none;
 }
 .logoLogistics {
-	width: 70px;
-	padding: 10px;
+	width: 56px;
+	padding: 8px;
 }
 .fontText {
 	color: var(--font-color);
-	font-family: "Poppins", sans-serif;
+	font-family: "Inter", system-ui, sans-serif;
+	font-weight: 600;
+	letter-spacing: -0.02em;
+}
+.font {
+	border-radius: var(--radius-pill);
+	padding: 0.35rem 0.85rem !important;
+	transition: background-color 0.15s ease;
+}
+.font:hover {
+	background-color: rgba(255, 255, 255, 0.12);
 }

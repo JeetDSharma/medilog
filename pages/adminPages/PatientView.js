@@ -14,7 +14,7 @@ const AdminDashboard = () => {
    const deletePatient = async (value) => {
      console.log(value);
      try {
-       const response = await fetch("http://localhost:5000/api/patientDelete", {
+       const response = await fetch("http://localhost:5001/api/patientDelete", {
          method: "POST",
          headers: {
            "Content-Type": "application/json",
@@ -33,7 +33,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const sendrequest = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/patientlist')
+        const response = await fetch('http://localhost:5001/api/patientlist')
         const responseData = await response.json()
         console.log(responseData)
         setLoadedPatients(responseData)

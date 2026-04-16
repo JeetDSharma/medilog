@@ -16,7 +16,7 @@ const EditProfilePharmacy = () => {
       try {
         const { id } = router.query
         const response = await fetch(
-          "http://localhost:5000/api/pharmacyGetDetails",
+          "http://localhost:5001/api/pharmacyGetDetails",
           {
             method: "POST",
             headers: {
@@ -54,7 +54,7 @@ const EditProfilePharmacy = () => {
     event.preventDefault()
     try {
       const response = await fetch(
-        "http://localhost:5000/api/pharmacyUpdate",
+        "http://localhost:5001/api/pharmacyUpdate",
         {
           method: "POST",
           headers: {

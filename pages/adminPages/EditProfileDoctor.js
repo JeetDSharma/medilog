@@ -16,7 +16,7 @@ const EditProfileDoctor = () => {
       try {
         const { id } = router.query;
         const response = await fetch(
-          "http://localhost:5000/api/doctorGetDetails",
+          "http://localhost:5001/api/doctorGetDetails",
           {
             method: "POST",
             headers: {
@@ -55,7 +55,7 @@ const EditProfileDoctor = () => {
   const handleUpdate = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/doctorUpdate", {
+      const response = await fetch("http://localhost:5001/api/doctorUpdate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

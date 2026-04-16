@@ -16,7 +16,7 @@ const PharmacyDash = () => {
         const walletAddress =
           "1Lbcfr7sAHTD9CgdQo3HTMTkV8LK4ZnX71"
         const response = await fetch(
-          `http://localhost:5000/api/pharmacyGetDetailByWallet`,
+          `http://localhost:5001/api/pharmacyGetDetailByWallet`,
           {
             method: "POST",
             headers: {

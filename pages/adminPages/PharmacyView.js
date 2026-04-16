@@ -14,7 +14,7 @@ const AdminDashboard = () => {
   const deletePharmacy = async (value) => {
     console.log(value);
     try {
-      const response = await fetch("http://localhost:5000/api/pharmacyDelete", {
+      const response = await fetch("http://localhost:5001/api/pharmacyDelete", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,7 +33,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const sendrequest = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/pharmacylist");
+        const response = await fetch("http://localhost:5001/api/pharmacylist");
         const responseData = await response.json();
         console.log(responseData);
         setLoadedPharmacies(responseData);

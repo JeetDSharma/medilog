@@ -28,7 +28,7 @@ const ManufacturerDashAddDrug = () => {
   useEffect(() => {
     const requestDataMedicine = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/medicinelist", {
+        const response = await fetch("http://localhost:5001/api/medicinelist", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

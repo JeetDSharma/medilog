@@ -42,7 +42,7 @@ const ManufacturerDash = () => {
     const sendrequestPharmacy = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/pharmacylist"
+          "http://localhost:5001/api/pharmacylist"
         )
         const responseData = await response.json()
         console.log(responseData)
@@ -54,7 +54,7 @@ const ManufacturerDash = () => {
     const sendrequestMedicine = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/medicinelist"
+          "http://localhost:5001/api/medicinelist"
         )
         const responseData = await response.json()
         console.log(responseData)

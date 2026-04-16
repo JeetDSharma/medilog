@@ -42,7 +42,7 @@ const AdminDashboardAddPatient = () => {
     console.log(formData);
     
       try {
-        const response = await fetch("http://localhost:5000/api/patientAdd", {
+        const response = await fetch("http://localhost:5001/api/patientAdd", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

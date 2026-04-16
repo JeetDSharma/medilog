@@ -92,7 +92,7 @@ const PharmacySellToPatient = () => {
           console.log(`fetched address: ${address}`);
         }
         const response = await fetch(
-          "http://localhost:5000/api/pharmacyGetDetailByWallet",
+          "http://localhost:5001/api/pharmacyGetDetailByWallet",
           {
             method: "POST",
             headers: {
@@ -121,7 +121,7 @@ const PharmacySellToPatient = () => {
     };
     const requestDataMedicine = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/medicinelist", {
+        const response = await fetch("http://localhost:5001/api/medicinelist", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

@@ -15,7 +15,7 @@ const DoctorProfile = () => {
         const walletAddress =
           "0x2C17BbFCb04161690949f026A8fA62237795A962"
         const response = await fetch(
-          `http://localhost:5000/api/doctorGetDetailByWallet`,
+          `http://localhost:5001/api/doctorGetDetailByWallet`,
           {
             method: "POST",
             headers: {

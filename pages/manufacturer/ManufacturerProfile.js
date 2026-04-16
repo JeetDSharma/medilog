@@ -16,7 +16,7 @@ const ManufacturerDash = () => {
         const walletAddress =
           "0xfa3a6089C317868655f9B15433B62F3f682D2691"
         const response = await fetch(
-          `http://localhost:5000/api/manufacturerGetDetailByWallet`,
+          `http://localhost:5001/api/manufacturerGetDetailByWallet`,
           {
             method: "POST",
             headers: {

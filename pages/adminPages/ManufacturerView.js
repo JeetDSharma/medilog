@@ -15,7 +15,7 @@ const ManufacturerView = () => {
     console.log(value);
     try {
       const response = await fetch(
-        "http://localhost:5000/api/manufacturerDelete",
+        "http://localhost:5001/api/manufacturerDelete",
         {
           method: "POST",
           headers: {
@@ -37,7 +37,7 @@ const ManufacturerView = () => {
     const sendrequest = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/manufacturerlist"
+          "http://localhost:5001/api/manufacturerlist"
         );
         const responseData = await response.json();
         console.log(responseData);

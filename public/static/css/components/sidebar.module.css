@@ -1,48 +1,51 @@
 .mainContainerSidebar {
-	max-width: 20vw;
+	max-width: min(20vw, 280px);
+	min-width: 200px;
 	height: 100vh;
-	padding: 0;
-
+	padding: 0 0.65rem 1rem;
 	background-color: var(--secondary-color);
-	/* background-image: var(--background-gradient); */
 	display: flex;
 	flex-direction: column;
-	vertical-align: middle;
-	/* padding-top: 50px; */
+	gap: 0.5rem;
 	position: fixed;
 	padding-top: 100px;
-	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+	border-right: var(--dash-border);
+	box-shadow: none;
+	z-index: 5;
 }
 
 .navigationButtons {
 	text-align: left;
-	padding: 5px;
+	padding: 0.65rem 0.85rem;
 	align-content: center;
-	/* margin: 20px; */
 	margin: 0;
-	height: 60px;
-	width: 20vw;
-	max-width: 18vw;
-	border-radius: 40px;
-	margin-left: 10px;
-	/* background-color: #437FC7; */
-	/* background-color: #6daffe; */
-	background-color: var(--secondary-color);
-
-	/* background-image: var(--background-gradient); */
-	border: none;
+	min-height: 52px;
+	width: 100%;
+	max-width: 100%;
+	border-radius: var(--radius-pill);
+	margin-left: 0;
+	background-color: #fff;
+	color: var(--font-color-sidebar);
+	border: var(--dash-border);
+	font-weight: 500;
+	box-shadow: 2px 2px 0 #000;
 }
 .navigationButtons:hover {
 	background-color: var(--hover-color);
+	color: #000;
+	border-color: #000;
 }
 
 .SideBarIcons {
-	margin: 15px;
+	margin: 0 12px 0 4px;
+	flex-shrink: 0;
 }
 
 .NavContent {
-	padding-left: 2vw;
-	font-size: 20px;
+	padding-left: 0.25rem;
+	font-size: 0.9rem;
+	display: flex;
+	align-items: center;
 }
 
 @media only screen and (max-width: 767px) {

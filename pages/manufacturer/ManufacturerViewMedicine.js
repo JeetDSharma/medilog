@@ -15,7 +15,7 @@ const ViewMedicine = () => {
     console.log(value)
     try {
       const response = await fetch(
-        "http://localhost:5000/api/medicineDelete",
+        "http://localhost:5001/api/medicineDelete",
         {
           method: "POST",
           headers: {
@@ -36,7 +36,7 @@ const ViewMedicine = () => {
   useEffect(() => {
     const sendrequest = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/medicinelist')
+        const response = await fetch('http://localhost:5001/api/medicinelist')
         const responseData = await response.json()
         console.log(responseData)
         setLoadedMedicines(responseData)

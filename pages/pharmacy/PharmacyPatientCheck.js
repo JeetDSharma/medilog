@@ -74,7 +74,7 @@ const PharmacyPatientCheck = () => {
     try {
       // const walletAddress = "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2"
       const response = await fetch(
-        `http://localhost:5000/api/patientGetDetailByWallet`,
+        `http://localhost:5001/api/patientGetDetailByWallet`,
         {
           method: "POST",
           headers: {
