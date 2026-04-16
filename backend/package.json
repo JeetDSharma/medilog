@@ -6,7 +6,8 @@
   "type": "nodemon",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon App.js"
+    "start": "nodemon App.js",
+    "seed:demo": "node scripts/seed-demo-data.js"
   },
   "keywords": [],
   "author": "",
