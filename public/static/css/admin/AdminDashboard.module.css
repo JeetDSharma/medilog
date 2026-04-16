@@ -1,0 +1,44 @@
+.mainContainerDash {
+	padding-left: 200px;
+	padding-top: 100px;
+	padding-right: 50px;
+
+	margin-right: 0;
+	max-width: 90vw;
+}
+.mainContainerDashCol {
+	padding: 0;
+	margin: 0;
+	width: 10px;
+}
+.mainContainerDashRow {
+	padding: 0px;
+	margin: 0px;
+}
+.cardMain {
+	width: 250px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	margin-left: 20px;
+	margin-right: 30px;
+	text-align: center;
+	height: 150px;
+}
+.secondRowMain {
+	padding-top: 20px;
+	margin-left: 10px;
+}
+
+.chartDiv {
+	width: 100px;
+	height: 100px;
+}
+.CardTable {
+	margin-right: 10px;
+	text-align: center;
+}
+.graphCard {
+	padding-left: 20px;
+	padding-top: 20px;
+	text-align: center;
+}

@@ -1,0 +1,54 @@
+.mainContainerSidebar {
+	max-width: 20vw;
+	height: 100vh;
+	padding: 0;
+
+	background-color: var(--secondary-color);
+	/* background-image: var(--background-gradient); */
+	display: flex;
+	flex-direction: column;
+	vertical-align: middle;
+	/* padding-top: 50px; */
+	position: fixed;
+	padding-top: 100px;
+	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.navigationButtons {
+	text-align: left;
+	padding: 5px;
+	align-content: center;
+	/* margin: 20px; */
+	margin: 0;
+	height: 60px;
+	width: 20vw;
+	max-width: 18vw;
+	border-radius: 40px;
+	margin-left: 10px;
+	/* background-color: #437FC7; */
+	/* background-color: #6daffe; */
+	background-color: var(--secondary-color);
+
+	/* background-image: var(--background-gradient); */
+	border: none;
+}
+.navigationButtons:hover {
+	background-color: var(--hover-color);
+}
+
+.SideBarIcons {
+	margin: 15px;
+}
+
+.NavContent {
+	padding-left: 2vw;
+	font-size: 20px;
+}
+
+@media only screen and (max-width: 767px) {
+	.navigationButtons {
+		width: 100%;
+		height: 50px;
+		margin: 10px 0;
+	}
+}

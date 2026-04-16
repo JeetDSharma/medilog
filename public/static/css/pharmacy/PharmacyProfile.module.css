@@ -1,0 +1,48 @@
+.mainContainerDash {
+	padding-right: 100px;
+	padding-left: 100px;
+	padding-top: 100px;
+	padding-right: 300px;
+	margin-right: 0;
+	max-width: 80vw;
+}
+.mainContainerDashCol {
+	padding: 0;
+	margin: 0;
+	width: 10px;
+}
+.mainContainerDashRow {
+	padding: 0px;
+	margin: 0px;
+}
+.mainCard {
+	box-shadow: 5px 5px 5px #d0d0d0;
+	border-radius: 10px;
+	width: 1000px;
+}
+.TableMain {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+.tableRow {
+	border-bottom: 0px solid #d0d0d0;
+}
+.mainImageDiv {
+	max-width: 300px;
+}
+.imagePharmacy {
+	width: 200px;
+	height: 200px;
+	border-radius: 100px;
+	overflow: hidden;
+	border: 1px solid #0e0e0e;
+	display: flex;
+	vertical-align: middle;
+	margin-top: 10%;
+}
+.imagePharmacy:hover {
+	border: 1px solid #1100ff;
+	box-shadow: 5px 5px 5px #d3d3d3;
+}

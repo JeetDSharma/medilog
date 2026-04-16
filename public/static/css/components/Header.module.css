@@ -1,0 +1,22 @@
+.mainNavbar {
+	height: 10vh;
+  width: 100vw;
+	background-color: var(--primary-color);
+	position: fixed;
+  z-index: 10;
+}
+.mainContainer {
+	margin: 0;
+	padding: 30px;
+}
+.restNav {
+	padding-left: 70vw;
+}
+.logoLogistics {
+	width: 70px;
+	padding: 10px;
+}
+.fontText {
+	color: var(--font-color);
+	font-family: "Poppins", sans-serif;
+}

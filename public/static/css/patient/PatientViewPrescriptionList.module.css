@@ -1,0 +1,29 @@
+.mainContainerDash {
+	padding-right: 100px;
+	padding-left: 100px;
+	padding-top: 100px;
+	padding-right: 300px;
+	margin-right: 0;
+	max-width: 80vw;
+	background-color: rgb(251, 251, 251);
+	height: 100vh;
+}
+.mainContainerDashCol {
+	padding: 0;
+	margin: 0;
+	width: 10px;
+}
+.mainContainerDashRow {
+	padding: 0px;
+	margin: 0px;
+}
+.mainCardContainer {
+	background-color: rgb(255, 255, 255);
+	padding: 60px;
+	margin-left: 20px;
+	width: 100%;
+	box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2);
+}
+.AccordianMainContainer {
+	margin-top: 20px;
+}

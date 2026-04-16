@@ -1,0 +1,55 @@
+{
+	"name": "medilog",
+	"version": "1.0.0",
+	"description": "Medicine Logistics System",
+	"main": "index.js",
+	"scripts": {
+		"test": "mocha",
+		"dev": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
+		"start:frontend": "next dev",
+		"start:backend": "cd backend && npm start",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint",
+		"server": "node server.js",
+		"open-browser": "start http://localhost:3000"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/quonss/MediLog.git"
+	},
+	"author": "Quons",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/quonss/MediLog/issues"
+	},
+	"homepage": "https://github.com/quonss/MediLog#readme",
+	"dependencies": {
+		"apexcharts": "^3.37.1",
+		"bootstrap": "^5.2.3",
+		"concurrently": "^7.6.0",
+		"dotenv": "^16.0.3",
+		"ethers": "^5.7.2",
+		"fs-extra": "^11.1.0",
+		"ganache-cli": "^6.12.2",
+		"hardhat": "^2.12.6",
+		"mocha": "^10.2.0",
+		"mongoose": "^6.9.0",
+		"next": "^13.1.2",
+		"next-routes": "^1.4.2",
+		"qrcode.react": "^3.1.0",
+		"react": "^18.2.0",
+		"react-apexcharts": "^1.4.0",
+		"react-bootstrap": "^2.7.0",
+		"react-dom": "^18.2.0",
+		"react-icons": "^4.8.0",
+		"react-qr-reader": "^3.0.0-beta-1",
+		"react-qr-scanner": "^1.0.0-alpha.11",
+		"recharts": "^2.4.3",
+		"sass": "^1.57.1",
+		"solc": "^0.8.17",
+		"solhint": "^3.4.1",
+		"truffle-hdwallet-provider": "^1.0.17",
+		"web3": "1.7.4"
+	}
+}
