@@ -17,6 +17,9 @@ import { ethers } from "ethers";
 import prescribe from "../../HardHat/artifacts/contracts/prescribe_medicine.sol/Prescription.json";
 import medicine from "../../HardHat/artifacts/contracts/medicine.sol/Medicine.json";
 import { prescribeAdd, medicineAdd } from "../../lib/contractAddresses"
+import { API_BASE } from "../../lib/apiBase";
+import { validateEthAddress, validateRequired } from "../../lib/formValidation";
+
 const AdminDashboardAddDoctor = () => {
   const prescribeAddress = prescribeAdd;
   const router = useRouter();
@@ -34,17 +37,45 @@ const AdminDashboardAddDoctor = () => {
     speciality: "",
     doctorRegNo: "",
   });
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [submitting, setSubmitting] = useState(false);
 
   const handleChange = (event) => {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
+    const { name } = event.target;
+    setFieldErrors((prev) => {
+      if (!prev[name]) return prev;
+      const next = { ...prev };
+      delete next[name];
+      return next;
+    });
+    setFormData({ ...formData, [name]: event.target.value });
   };
+
+  const validateForm = () => {
+    const e = {};
+    const v = (msg, key) => {
+      if (msg) e[key] = msg;
+    };
+    v(validateRequired(formData.DoctorName, "Doctor name"), "DoctorName");
+    v(validateEthAddress(formData.walletAddress), "walletAddress");
+    v(validateRequired(formData.DOB, "Date of birth"), "DOB");
+    v(validateRequired(formData.emailID, "Email"), "emailID");
+    v(validateRequired(formData.phoneNumber, "Phone number"), "phoneNumber");
+    v(validateRequired(formData.speciality, "Speciality"), "speciality");
+    v(validateRequired(formData.doctorRegNo, "Registration number"), "doctorRegNo");
+    setFieldErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!validateForm() || submitting) return;
+    setSubmitting(true);
     console.log(formData);
     const res = await addDoctorInContract(formData.walletAddress);
     if (res) {
       try {
-        const response = await fetch("http://localhost:5001/api/doctorAdd", {
+        const response = await fetch(`${API_BASE}/api/doctorAdd`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -66,6 +97,7 @@ const AdminDashboardAddDoctor = () => {
       }
       setShow(true);
     }
+    setSubmitting(false);
   };
   const addDoctorInContract = async (walletAddress) => {
     console.log("Contract Called");
@@ -121,7 +153,11 @@ const AdminDashboardAddDoctor = () => {
                       placeholder="Enter Name Of Doctor"
                       onChange={handleChange}
                       value={formData.DoctorName}
+                      isInvalid={!!fieldErrors.DoctorName}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.DoctorName}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Form.Group
@@ -136,10 +172,17 @@ const AdminDashboardAddDoctor = () => {
                     <Form.Control
                       type="text"
                       name="walletAddress"
-                      placeholder="Enter Wallet Address"
+                      placeholder="0x…"
                       onChange={handleChange}
                       value={formData.walletAddress}
+                      isInvalid={!!fieldErrors.walletAddress}
                     />
+                    <Form.Text className="text-muted">
+                      Must match the wallet enrolled as a prescriber on-chain.
+                    </Form.Text>
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.walletAddress}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3" controlId="formBasicDOB">
@@ -153,7 +196,11 @@ const AdminDashboardAddDoctor = () => {
                       placeholder="Enter Date Of Birth"
                       onChange={handleChange}
                       value={formData.DOB}
+                      isInvalid={!!fieldErrors.DOB}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.DOB}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Form.Group
@@ -167,11 +214,15 @@ const AdminDashboardAddDoctor = () => {
                   <Col sm={8}>
                     <Form.Control
                       name="emailID"
-                      type="text"
+                      type="email"
                       placeholder="Enter Email"
                       onChange={handleChange}
                       value={formData.emailID}
+                      isInvalid={!!fieldErrors.emailID}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.emailID}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Form.Group
@@ -185,11 +236,16 @@ const AdminDashboardAddDoctor = () => {
                   <Col sm={8}>
                     <Form.Control
                       name="phoneNumber"
-                      type="number"
+                      type="text"
+                      inputMode="numeric"
                       placeholder="Enter Phone Number"
                       onChange={handleChange}
                       value={formData.phoneNumber}
+                      isInvalid={!!fieldErrors.phoneNumber}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.phoneNumber}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Form.Group
@@ -207,7 +263,11 @@ const AdminDashboardAddDoctor = () => {
                       placeholder="Enter Speciality"
                       onChange={handleChange}
                       value={formData.speciality}
+                      isInvalid={!!fieldErrors.speciality}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.speciality}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Form.Group
@@ -225,16 +285,20 @@ const AdminDashboardAddDoctor = () => {
                       placeholder="Enter Reg No"
                       onChange={handleChange}
                       value={formData.doctorRegNo}
+                      isInvalid={!!fieldErrors.doctorRegNo}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.doctorRegNo}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Col sm={12} className="text-center">
                   <Button
                     variant="outline-primary"
                     type="submit"
-                    // onClick={submitFormDoctor}
+                    disabled={submitting}
                   >
-                    Submit
+                    {submitting ? "Submitting…" : "Submit"}
                   </Button>
                 </Col>
               </Form>

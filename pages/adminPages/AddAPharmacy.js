@@ -11,13 +11,18 @@ import {
   Container,
   Button,
 } from "react-bootstrap";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
-import { prescribeAdd, medicineAdd, dispenseAdd } from "../../lib/contractAddresses"
+import { dispenseAdd } from "../../lib/contractAddresses"
 import { ethers } from "ethers";
 import dispense from "../../HardHat/artifacts/contracts/dispense_medicine.sol/DispenseMedicine.json";
+import { API_BASE } from "../../lib/apiBase";
+import { validateEthAddress, validateRequired } from "../../lib/formValidation";
+
 const AdminDashboardAddPharmacy = () => {
   const [show, setShow] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
   const handleClose = () => {
     setShow(false);
@@ -32,16 +37,41 @@ const AdminDashboardAddPharmacy = () => {
     address: "",
   });
   const handleChange = (event) => {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
+    const { name } = event.target;
+    setFieldErrors((prev) => {
+      if (!prev[name]) return prev;
+      const next = { ...prev };
+      delete next[name];
+      return next;
+    });
+    setFormData({ ...formData, [name]: event.target.value });
   };
+
+  const validateForm = () => {
+    const e = {};
+    const v = (msg, key) => {
+      if (msg) e[key] = msg;
+    };
+    v(validateRequired(formData.pharmacyID, "Pharmacy ID"), "pharmacyID");
+    v(validateRequired(formData.PharmacyName, "Pharmacy name"), "PharmacyName");
+    v(validateEthAddress(formData.walletAddress), "walletAddress");
+    v(validateRequired(formData.emailID, "Email"), "emailID");
+    v(validateRequired(formData.phoneNumber, "Phone number"), "phoneNumber");
+    v(validateRequired(formData.address, "Address"), "address");
+    setFieldErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!validateForm() || submitting) return;
+    setSubmitting(true);
     console.log(formData);
     const res = await addPharmacyInContract(formData.walletAddress);
     if (res) {
       try {
         console.log("CALLED");
-        const response = await fetch("http://localhost:5001/api/pharmacyAdd", {
+        const response = await fetch(`${API_BASE}/api/pharmacyAdd`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -62,6 +92,7 @@ const AdminDashboardAddPharmacy = () => {
       }
       setShow(true);
     }
+    setSubmitting(false);
   };
   const addPharmacyInContract = async (walletAddress) => {
     console.log("Contract Called");
@@ -121,7 +152,11 @@ const AdminDashboardAddPharmacy = () => {
                       placeholder="Enter Pharmacy ID"
                       onChange={handleChange}
                       value={formData.pharmacyID}
+                      isInvalid={!!fieldErrors.pharmacyID}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.pharmacyID}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3" controlId="formBasicName">
@@ -135,7 +170,11 @@ const AdminDashboardAddPharmacy = () => {
                       placeholder="Enter Name Of Pharmacy"
                       onChange={handleChange}
                       value={formData.PharmacyName}
+                      isInvalid={!!fieldErrors.PharmacyName}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.PharmacyName}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Form.Group
@@ -150,10 +189,17 @@ const AdminDashboardAddPharmacy = () => {
                     <Form.Control
                       name="walletAddress"
                       type="text"
-                      placeholder="Enter Wallet Address"
+                      placeholder="0x…"
                       onChange={handleChange}
                       value={formData.walletAddress}
+                      isInvalid={!!fieldErrors.walletAddress}
                     />
+                    <Form.Text className="text-muted">
+                      Must match the wallet approved for this pharmacy on-chain.
+                    </Form.Text>
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.walletAddress}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Form.Group
@@ -167,11 +213,15 @@ const AdminDashboardAddPharmacy = () => {
                   <Col sm={8}>
                     <Form.Control
                       name="emailID"
-                      type="text"
+                      type="email"
                       placeholder="Enter Enter Email"
                       onChange={handleChange}
                       value={formData.emailID}
+                      isInvalid={!!fieldErrors.emailID}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.emailID}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Form.Group
@@ -185,11 +235,16 @@ const AdminDashboardAddPharmacy = () => {
                   <Col sm={8}>
                     <Form.Control
                       name="phoneNumber"
-                      type="number"
+                      type="text"
+                      inputMode="numeric"
                       placeholder="Enter Phone Number"
                       onChange={handleChange}
                       value={formData.phoneNumber}
+                      isInvalid={!!fieldErrors.phoneNumber}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.phoneNumber}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Form.Group
@@ -207,12 +262,16 @@ const AdminDashboardAddPharmacy = () => {
                       placeholder="Enter Address"
                       onChange={handleChange}
                       value={formData.address}
+                      isInvalid={!!fieldErrors.address}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.address}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Col sm={12} className="text-center">
-                  <Button variant="primary" type="submit">
-                    Submit
+                  <Button variant="primary" type="submit" disabled={submitting}>
+                    {submitting ? "Submitting…" : "Submit"}
                   </Button>
                 </Col>
               </Form>

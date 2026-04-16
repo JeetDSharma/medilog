@@ -17,6 +17,9 @@ import { ethers } from "ethers";
 import prescribe from "../../HardHat/artifacts/contracts/prescribe_medicine.sol/Prescription.json";
 import medicine from "../../HardHat/artifacts/contracts/medicine.sol/Medicine.json";
 import { prescribeAdd, medicineAdd } from "../../lib/contractAddresses"
+import { API_BASE } from "../../lib/apiBase";
+import { validateEthAddress, validateRequired } from "../../lib/formValidation";
+
 const AdminDashboardAddPatient = () => {
   const prescribeAddress = prescribeAdd;
   const router = useRouter();
@@ -32,16 +35,42 @@ const AdminDashboardAddPatient = () => {
     phoneNumber: "",
     aadharCard: "",
   });
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [submitting, setSubmitting] = useState(false);
 
   const handleChange = (event) => {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
+    const { name } = event.target;
+    setFieldErrors((prev) => {
+      if (!prev[name]) return prev;
+      const next = { ...prev };
+      delete next[name];
+      return next;
+    });
+    setFormData({ ...formData, [name]: event.target.value });
   };
+
+  const validateForm = () => {
+    const e = {};
+    const v = (msg, key) => {
+      if (msg) e[key] = msg;
+    };
+    v(validateRequired(formData.patientName, "Patient name"), "patientName");
+    v(validateEthAddress(formData.walletAddress), "walletAddress");
+    v(validateRequired(formData.emailID, "Email"), "emailID");
+    v(validateRequired(formData.phoneNumber, "Phone number"), "phoneNumber");
+    v(validateRequired(formData.aadharCard, "Aadhar card"), "aadharCard");
+    setFieldErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!validateForm() || submitting) return;
+    setSubmitting(true);
     console.log(formData);
-    
+
       try {
-        const response = await fetch("http://localhost:5001/api/patientAdd", {
+        const response = await fetch(`${API_BASE}/api/patientAdd`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -60,6 +89,7 @@ const AdminDashboardAddPatient = () => {
         console.log(err);
       }
       setShow(true);
+    setSubmitting(false);
   };
   
   return (
@@ -79,7 +109,11 @@ const AdminDashboardAddPatient = () => {
                       placeholder="Enter Name Of Patient"
                       onChange={handleChange}
                       value={formData.patientName}
+                      isInvalid={!!fieldErrors.patientName}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.patientName}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Form.Group
@@ -94,10 +128,17 @@ const AdminDashboardAddPatient = () => {
                     <Form.Control
                       type="text"
                       name="walletAddress"
-                      placeholder="Enter Wallet Address"
+                      placeholder="0x…"
                       onChange={handleChange}
                       value={formData.walletAddress}
+                      isInvalid={!!fieldErrors.walletAddress}
                     />
+                    <Form.Text className="text-muted">
+                      Patient’s wallet used for prescriptions and dispensing.
+                    </Form.Text>
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.walletAddress}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Form.Group
@@ -111,11 +152,15 @@ const AdminDashboardAddPatient = () => {
                   <Col sm={8}>
                     <Form.Control
                       name="emailID"
-                      type="text"
+                      type="email"
                       placeholder="Enter Email"
                       onChange={handleChange}
                       value={formData.emailID}
+                      isInvalid={!!fieldErrors.emailID}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.emailID}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Form.Group
@@ -129,11 +174,16 @@ const AdminDashboardAddPatient = () => {
                   <Col sm={8}>
                     <Form.Control
                       name="phoneNumber"
-                      type="number"
+                      type="text"
+                      inputMode="numeric"
                       placeholder="Enter Phone Number"
                       onChange={handleChange}
                       value={formData.phoneNumber}
+                      isInvalid={!!fieldErrors.phoneNumber}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.phoneNumber}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Form.Group
@@ -147,11 +197,16 @@ const AdminDashboardAddPatient = () => {
                   <Col sm={8}>
                     <Form.Control
                       name="aadharCard"
-                      type="number"
+                      type="text"
+                      inputMode="numeric"
                       placeholder="Enter Aadhar Card"
                       onChange={handleChange}
                       value={formData.aadharCard}
+                      isInvalid={!!fieldErrors.aadharCard}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.aadharCard}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
 
@@ -159,9 +214,9 @@ const AdminDashboardAddPatient = () => {
                   <Button
                     variant="outline-primary"
                     type="submit"
-                    // onClick={submitFormDoctor}
+                    disabled={submitting}
                   >
-                    Submit
+                    {submitting ? "Submitting…" : "Submit"}
                   </Button>
                 </Col>
               </Form>
@@ -170,7 +225,7 @@ const AdminDashboardAddPatient = () => {
                   <Modal.Title>Addition Successful</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  Patient <strong>{formData.DoctorName} </strong> Added
+                  Patient <strong>{formData.patientName} </strong> Added
                   Succesfully
                 </Modal.Body>
                 <Modal.Footer>

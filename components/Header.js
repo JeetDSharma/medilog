@@ -1,17 +1,18 @@
 import React from "react"
-import { Nav, Navbar, Button, Container, Image } from "react-bootstrap"
+import { Nav, Navbar, Button, Container, Image, NavDropdown } from "react-bootstrap"
 import Link from "next/link"
 import { FaChevronDown } from "react-icons/fa"
 import styles from "../public/static/css/components/Header.module.css"
+import {
+  NAV_HOME,
+  NAV_PLATFORM_DROPDOWN_LABEL,
+  NAV_PLATFORM_LINKS,
+  NAV_OPERATIONS,
+} from "../lib/navConfig"
+import { useWalletRole } from "../contexts/WalletRoleContext"
 
 const Header = () => {
-  const connectWallet = async () => {
-    if (typeof window !== "undefined" && window.ethereum) {
-      await window.ethereum.request({ method: "eth_requestAccounts" })
-    } else {
-      alert("METAMASK NOT FOUND!")
-    }
-  }
+  const { connectWallet } = useWalletRole()
 
   return (
     <Navbar className={ styles.mainNavbar } expand="lg" collapseOnSelect>
@@ -31,43 +32,35 @@ const Header = () => {
         />
         <Navbar.Collapse id="medilog-navbar-nav" className={ styles.navCollapse }>
           <Nav className={ [styles.centerNav, "mx-lg-auto" ].join(" ") }>
-            <Nav.Link as={ Link } href="/" className={ styles.navLink }>
-              Home
-            </Nav.Link>
             <Nav.Link
               as={ Link }
-              href="/manufacturer/ManufacturerDashboard"
+              href={ NAV_HOME.href }
               className={ styles.navLink }
             >
-              Manufacturer
+              { NAV_HOME.label }
             </Nav.Link>
+            <NavDropdown
+              title={ NAV_PLATFORM_DROPDOWN_LABEL }
+              id="medilog-platform-nav"
+              className={ styles.navDropdown }
+            >
+              { NAV_PLATFORM_LINKS.map(({ href, label }) => (
+                <NavDropdown.Item
+                  key={ href }
+                  as={ Link }
+                  href={ href }
+                  className={ styles.navDropdownItem }
+                >
+                  { label }
+                </NavDropdown.Item>
+              )) }
+            </NavDropdown>
             <Nav.Link
               as={ Link }
-              href="/doctor/DoctorDashboard"
+              href={ NAV_OPERATIONS.href }
               className={ styles.navLink }
             >
-              Doctor
-            </Nav.Link>
-            <Nav.Link
-              as={ Link }
-              href="/pharmacy/PharmacyDashboard"
-              className={ styles.navLink }
-            >
-              Pharmacy
-            </Nav.Link>
-            <Nav.Link
-              as={ Link }
-              href="/patient/PatientDashboard"
-              className={ styles.navLink }
-            >
-              Patient
-            </Nav.Link>
-            <Nav.Link
-              as={ Link }
-              href="/adminPages/AdminDashboard"
-              className={ styles.navLink }
-            >
-              Admin
+              { NAV_OPERATIONS.label }
             </Nav.Link>
           </Nav>
           <Nav className={ styles.rightNav }>

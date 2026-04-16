@@ -1,0 +1,81 @@
+.loading {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.75rem;
+	min-height: 40vh;
+	padding: 2rem 1rem;
+}
+
+.loadingText {
+	font-size: 0.9rem;
+	font-weight: 600;
+	color: #555;
+}
+
+.panel {
+	max-width: 520px;
+	margin: 0 auto;
+	padding: clamp(2rem, 5vw, 3rem) 1.25rem;
+}
+
+.title {
+	font-size: clamp(1.15rem, 2.5vw, 1.4rem);
+	font-weight: 800;
+	letter-spacing: -0.03em;
+	margin: 0 0 1rem;
+	color: #111;
+}
+
+.body {
+	margin: 0 0 1.5rem;
+	font-size: 0.95rem;
+	line-height: 1.6;
+	color: #444;
+	font-weight: 500;
+}
+
+.primaryBtn {
+	border-radius: var(--radius-pill, 999px) !important;
+	font-weight: 700 !important;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	font-size: 0.72rem !important;
+	padding: 0.55rem 1.25rem !important;
+}
+
+.secondaryBtn {
+	border-radius: var(--radius-pill, 999px) !important;
+	font-weight: 600 !important;
+	font-size: 0.8rem !important;
+}
+
+.actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.75rem 1rem;
+	margin-bottom: 1.25rem;
+}
+
+.linkBtn {
+	font-weight: 700;
+	font-size: 0.88rem;
+	color: #0d6efd;
+	text-decoration: none;
+}
+
+.linkBtn:hover {
+	text-decoration: underline;
+}
+
+.muted {
+	margin: 0;
+	font-size: 0.85rem;
+	color: #666;
+}
+
+.muted a {
+	font-weight: 600;
+	color: #333;
+}

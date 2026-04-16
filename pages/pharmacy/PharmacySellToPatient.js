@@ -21,6 +21,9 @@ import { QrReader } from "react-qr-reader";
 import dispense from "../../HardHat/artifacts/contracts/dispense_medicine.sol/DispenseMedicine.json";
 import { ethers } from "ethers";
 import { dispenseAdd } from "../../lib/contractAddresses"
+import { API_BASE } from "../../lib/apiBase";
+import { validateEthAddress, validateRequired } from "../../lib/formValidation";
+
 const PharmacySellToPatient = () => {
   const [show, setShow] = useState(false);
   const [showListModal, setShowListModal] = useState(false);
@@ -64,6 +67,12 @@ const PharmacySellToPatient = () => {
   };
   // TO FIX THE FUNCTION BELOW
   const handleAddMedicine = (event) => {
+    setFieldErrors((prev) => {
+      if (!prev.SerialID) return prev;
+      const next = { ...prev };
+      delete next.SerialID;
+      return next;
+    });
     setFormData({
       ...formData,
       SerialID: [...formData.SerialID, SerialID],
@@ -91,7 +100,7 @@ const PharmacySellToPatient = () => {
           console.log(`fetched address: ${address}`);
         }
         const response = await fetch(
-          "http://localhost:5001/api/pharmacyGetDetailByWallet",
+          `${API_BASE}/api/pharmacyGetDetailByWallet`,
           {
             method: "POST",
             headers: {
@@ -147,8 +156,18 @@ const PharmacySellToPatient = () => {
     Price: [],
   });
   const [loadedMedicine, setLoadedMedicine] = useState([]);
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [submitting, setSubmitting] = useState(false);
+
   const handleChange = (event) => {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
+    const { name } = event.target;
+    setFieldErrors((prev) => {
+      if (!prev[name]) return prev;
+      const next = { ...prev };
+      delete next[name];
+      return next;
+    });
+    setFormData({ ...formData, [name]: event.target.value });
   };
   const handleChangeSerialID = (event) => {
     setSerialID(event.target.value);
@@ -156,8 +175,37 @@ const PharmacySellToPatient = () => {
   const handleChangePrice = (event) => {
     setPrice(event.target.value);
   };
+  const validateForm = () => {
+    const e = {};
+    const v = (msg, key) => {
+      if (msg) e[key] = msg;
+    };
+    v(validateRequired(formData.PrescriptionID, "Prescription ID"), "PrescriptionID");
+    v(validateRequired(formData.DispenseID, "Dispense ID"), "DispenseID");
+    v(validateRequired(formData.PharmacyID, "Pharmacy ID"), "PharmacyID");
+    const patientAddr =
+      typeof formData.PatientWalletAddress === "string"
+        ? formData.PatientWalletAddress
+        : ""
+    v(validateEthAddress(patientAddr), "PatientWalletAddress");
+    if (!formData.SerialID || formData.SerialID.length < 1) {
+      e.SerialID = "Add at least one serial ID (and price) before submitting.";
+    }
+    if (
+      formData.SerialID &&
+      formData.Price &&
+      formData.SerialID.length !== formData.Price.length
+    ) {
+      e.SerialID = "Each serial ID must have a matching price.";
+    }
+    setFieldErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!validateForm() || submitting) return;
+    setSubmitting(true);
     console.log(formData);
     const dateTemp = new Date().getTime();
     console.log(formData.Price);
@@ -199,7 +247,8 @@ const PharmacySellToPatient = () => {
       console.log(error);
       console.log("DID NOT RUN");
       console.log(window.ethereum);
-      return false;
+    } finally {
+      setSubmitting(false);
     }
   };
   const listenForTransactionMine = (transactionResponse, provider) => {
@@ -242,7 +291,11 @@ const PharmacySellToPatient = () => {
                       name="PrescriptionID"
                       onChange={handleChange}
                       value={formData.PrescriptionID}
+                      isInvalid={!!fieldErrors.PrescriptionID}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.PrescriptionID}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
 
@@ -261,7 +314,11 @@ const PharmacySellToPatient = () => {
                       name="DispenseID"
                       onChange={handleChange}
                       value={formData.DispenseID}
+                      isInvalid={!!fieldErrors.DispenseID}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.DispenseID}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
 
@@ -280,7 +337,11 @@ const PharmacySellToPatient = () => {
                       name="PharmacyID"
                       onChange={handleChange}
                       value={formData.PharmacyID}
+                      isInvalid={!!fieldErrors.PharmacyID}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.PharmacyID}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
 
@@ -315,11 +376,16 @@ const PharmacySellToPatient = () => {
                     <InputGroup>
                       <Form.Control
                         type="text"
-                        placeholder="Enter Patient Address"
+                        placeholder="0x…"
                         name="PatientWalletAddress"
                         onChange={handleChange}
-                        value={formData.PatientWalletAddress}
+                        value={
+                          typeof formData.PatientWalletAddress === "string"
+                            ? formData.PatientWalletAddress
+                            : ""
+                        }
                         disabled={disabledPatientWallet}
+                        isInvalid={!!fieldErrors.PatientWalletAddress}
                       />
                       <Button
                         variant="outline-secondary"
@@ -329,6 +395,9 @@ const PharmacySellToPatient = () => {
                         <AiOutlineQrcode />
                       </Button>
                     </InputGroup>
+                    <Form.Control.Feedback type="invalid" className="d-block">
+                      {fieldErrors.PatientWalletAddress}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Modal show={show} onHide={handleClosePatientWalletAddress}>
@@ -432,6 +501,11 @@ const PharmacySellToPatient = () => {
                         <AiOutlinePlus />
                       </Button>
                     </InputGroup>
+                    {fieldErrors.SerialID ? (
+                      <div className="invalid-feedback d-block">
+                        {fieldErrors.SerialID}
+                      </div>
+                    ) : null}
                   </Col>
                 </Form.Group>
 
@@ -454,8 +528,8 @@ const PharmacySellToPatient = () => {
                 </Col>
 
                 <Col sm={12} className="text-center">
-                  <Button variant="primary" type="submit">
-                    Submit
+                  <Button variant="primary" type="submit" disabled={submitting}>
+                    {submitting ? "Submitting…" : "Submit"}
                   </Button>
                 </Col>
               </Form>

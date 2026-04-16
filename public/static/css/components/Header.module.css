@@ -131,3 +131,49 @@
 	transform: translate(-1px, -1px);
 	box-shadow: 4px 4px 0 #000;
 }
+
+/* Platform dropdown — match nav pills */
+.navDropdown :global(.dropdown-toggle) {
+	color: var(--font-color) !important;
+	font-family: "Inter", system-ui, sans-serif;
+	font-size: 0.78rem;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	border-radius: var(--radius-pill) !important;
+	padding: 0.4rem 0.75rem !important;
+	border: none !important;
+	background: transparent !important;
+	box-shadow: none !important;
+}
+
+.navDropdown :global(.dropdown-toggle)::after {
+	margin-left: 0.35rem;
+	vertical-align: 0.12em;
+}
+
+.navDropdown :global(.dropdown-toggle):hover,
+.navDropdown :global(.show > .dropdown-toggle) {
+	background-color: rgba(255, 255, 255, 0.12) !important;
+	color: var(--hover-color) !important;
+}
+
+.navDropdown :global(.dropdown-menu) {
+	border: 2px solid #000;
+	border-radius: 14px;
+	box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.2);
+	padding: 0.35rem;
+	min-width: 12rem;
+}
+
+.navDropdownItem {
+	font-size: 0.85rem;
+	font-weight: 600;
+	border-radius: 10px !important;
+	padding: 0.45rem 0.75rem !important;
+}
+
+.navDropdownItem:hover,
+.navDropdownItem:focus {
+	background: rgba(0, 0, 0, 0.06) !important;
+}

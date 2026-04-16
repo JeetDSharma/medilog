@@ -21,6 +21,9 @@ import { QrReader } from "react-qr-reader";
 import { ethers } from "ethers";
 import { prescribeAdd } from "../../lib/contractAddresses"
 import prescribe from "../../HardHat/artifacts/contracts/prescribe_medicine.sol/Prescription.json";
+import { API_BASE } from "../../lib/apiBase";
+import { validateEthAddress, validateRequired } from "../../lib/formValidation";
+
 const DoctorDash = () => {
   const router = useRouter();
   const [loadedDoctor, setLoadedDoctor] = useState([]);
@@ -60,7 +63,7 @@ const DoctorDash = () => {
           console.log(`fetched address: ${address}`);
         }
         const response = await fetch(
-          "http://localhost:5001/api/doctorGetDetailByWallet",
+          `${API_BASE}/api/doctorGetDetailByWallet`,
           {
             method: "POST",
             headers: {
@@ -90,7 +93,7 @@ const DoctorDash = () => {
 
     const requestDataMedicine = async () => {
       try {
-        const response = await fetch("http://localhost:5001/api/medicinelist", {
+        const response = await fetch(`${API_BASE}/api/medicinelist`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -115,8 +118,18 @@ const DoctorDash = () => {
     patientAdd: "",
     doctorAdd: "",
   });
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [submitting, setSubmitting] = useState(false);
+
   const handleChange = (event) => {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
+    const { name } = event.target;
+    setFieldErrors((prev) => {
+      if (!prev[name]) return prev;
+      const next = { ...prev };
+      delete next[name];
+      return next;
+    });
+    setFormData({ ...formData, [name]: event.target.value });
   };
   const deleteMedicine = async (event) => {
     let medicineID = event.target.value;
@@ -129,8 +142,32 @@ const DoctorDash = () => {
     setFormData({ ...formData, medicineID: medicineList });
     // }
   };
+  const validateForm = () => {
+    const e = {};
+    const v = (msg, key) => {
+      if (msg) e[key] = msg;
+    };
+    v(validateRequired(formData.prescriptionID, "Prescription ID"), "prescriptionID");
+    v(validateEthAddress(formData.patientAdd), "patientAdd");
+    v(validateRequired(formData.validityPeriod, "Validity period"), "validityPeriod");
+    if (
+      formData.validityPeriod !== "" &&
+      (Number.isNaN(Number(formData.validityPeriod)) ||
+        Number(formData.validityPeriod) <= 0)
+    ) {
+      e.validityPeriod = "Enter a positive number of months.";
+    }
+    if (!formData.medicineID || formData.medicineID.length < 1) {
+      e.medicineID = "Select at least one medicine.";
+    }
+    setFieldErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!validateForm() || submitting) return;
+    setSubmitting(true);
     console.log(formData);
     const dateTemp = new Date().getTime();
     console.log(dateTemp);
@@ -154,13 +191,13 @@ const DoctorDash = () => {
         );
         await listenForTransactionMine(transactionResponse, provider);
         console.log("RAN");
-        return true;
       }
     } catch (error) {
       console.log(error);
       console.log("DID NOT RUN");
       console.log(window.ethereum);
-      return false;
+    } finally {
+      setSubmitting(false);
     }
   };
   const listenForTransactionMine = (transactionResponse, provider) => {
@@ -194,7 +231,11 @@ const DoctorDash = () => {
                       name="prescriptionID"
                       onChange={handleChange}
                       value={formData.prescriptionID}
+                      isInvalid={!!fieldErrors.prescriptionID}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.prescriptionID}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3" controlId="doctorID">
@@ -239,11 +280,12 @@ const DoctorDash = () => {
                     <InputGroup className="mb-3">
                       <Form.Control
                         type="text"
-                        placeholder="Enter Patient Wallet Address"
+                        placeholder="0x…"
                         name="patientAdd"
                         onChange={handleChange}
                         value={formData.patientAdd}
                         disabled={disabledWallet}
+                        isInvalid={!!fieldErrors.patientAdd}
                       />
                       <Button
                         variant="outline-secondary"
@@ -253,6 +295,9 @@ const DoctorDash = () => {
                         <AiOutlineQrcode />
                       </Button>
                     </InputGroup>
+                    <Form.Control.Feedback type="invalid" className="d-block">
+                      {fieldErrors.patientAdd}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Form.Group
@@ -289,7 +334,12 @@ const DoctorDash = () => {
                       name="validityPeriod"
                       onChange={handleChange}
                       value={formData.validityPeriod}
+                      min={1}
+                      isInvalid={!!fieldErrors.validityPeriod}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.validityPeriod}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
 
@@ -315,6 +365,12 @@ const DoctorDash = () => {
                               value={medicine.MedicineID}
                               onChange={(event) => {
                                 const medicineID = event.target.value;
+                                setFieldErrors((prev) => {
+                                  if (!prev.medicineID) return prev;
+                                  const next = { ...prev };
+                                  delete next.medicineID;
+                                  return next;
+                                });
                                 if (event.target.checked) {
                                   setFormData({
                                     ...formData,
@@ -340,6 +396,11 @@ const DoctorDash = () => {
                         ))}
                       </Dropdown.Menu>
                     </Dropdown>
+                    {fieldErrors.medicineID ? (
+                      <div className="invalid-feedback d-block">
+                        {fieldErrors.medicineID}
+                      </div>
+                    ) : null}
                   </Col>
                 </Form.Group>
                 <Col sm={12} className="text-center">
@@ -365,8 +426,8 @@ const DoctorDash = () => {
                   {}
                 </Col>
                 <Col sm={12} className="text-center">
-                  <Button variant="primary" type="submit">
-                    Give Prescription
+                  <Button variant="primary" type="submit" disabled={submitting}>
+                    {submitting ? "Submitting…" : "Give Prescription"}
                   </Button>
                 </Col>
                 <Modal show={show} onHide={handleClose}>

@@ -16,7 +16,9 @@ import { useRouter } from "next/router";
 import { ethers } from "ethers";
 import medicine from "../../HardHat/artifacts/contracts/medicine.sol/Medicine.json";
 import { medicineAdd, prescribeAdd } from "../../lib/contractAddresses"
-import { resolve } from "styled-jsx/css";
+import { API_BASE } from "../../lib/apiBase";
+import { validateEthAddress, validateRequired } from "../../lib/formValidation";
+
 const AdminDashboardAddManufacturer = () => {
   //lcoalhost address
   console.log(medicineAdd);
@@ -35,19 +37,46 @@ const AdminDashboardAddManufacturer = () => {
     phoneNumber: "",
     address: "",
   });
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [submitting, setSubmitting] = useState(false);
 
   const handleChange = (event) => {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
+    const { name } = event.target;
+    setFieldErrors((prev) => {
+      if (!prev[name]) return prev;
+      const next = { ...prev };
+      delete next[name];
+      return next;
+    });
+    setFormData({ ...formData, [name]: event.target.value });
   };
+
+  const validateForm = () => {
+    const e = {};
+    const v = (msg, key) => {
+      if (msg) e[key] = msg;
+    };
+    v(validateRequired(formData.manufacturerID, "Manufacturer ID"), "manufacturerID");
+    v(validateRequired(formData.ManufacturerName, "Manufacturer name"), "ManufacturerName");
+    v(validateEthAddress(formData.walletAddress), "walletAddress");
+    v(validateRequired(formData.emailID, "Email"), "emailID");
+    v(validateRequired(formData.phoneNumber, "Phone number"), "phoneNumber");
+    v(validateRequired(formData.address, "Address"), "address");
+    setFieldErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!validateForm() || submitting) return;
+    setSubmitting(true);
     console.log(formData);
     const res = await addManufacturerInContract(formData.walletAddress);
     if (res) {
       try {
         console.log("CALLED");
         const response = await fetch(
-          "http://localhost:5001/api/manufacturerAdd",
+          `${API_BASE}/api/manufacturerAdd`,
           {
             method: "POST",
             headers: {
@@ -70,6 +99,7 @@ const AdminDashboardAddManufacturer = () => {
       }
       setShow(true);
     }
+    setSubmitting(false);
   };
   //add manufacturer contract
   const addManufacturerInContract = async (walletAddress) => {
@@ -132,12 +162,16 @@ const AdminDashboardAddManufacturer = () => {
                   </Form.Label>
                   <Col sm={8}>
                     <Form.Control
-                      name="ManufacturerID"
+                      name="manufacturerID"
                       type="text"
                       placeholder="Enter Manufacturer ID"
                       onChange={handleChange}
-                      value={formData.ManufacturerID}
+                      value={formData.manufacturerID}
+                      isInvalid={!!fieldErrors.manufacturerID}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.manufacturerID}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3" controlId="formBasicName">
@@ -151,7 +185,11 @@ const AdminDashboardAddManufacturer = () => {
                       placeholder="Enter Name Of Manufacturer"
                       onChange={handleChange}
                       value={formData.ManufacturerName}
+                      isInvalid={!!fieldErrors.ManufacturerName}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.ManufacturerName}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Form.Group
@@ -166,10 +204,17 @@ const AdminDashboardAddManufacturer = () => {
                     <Form.Control
                       name="walletAddress"
                       type="text"
-                      placeholder="Enter Wallet Address"
+                      placeholder="0x…"
                       onChange={handleChange}
                       value={formData.walletAddress}
+                      isInvalid={!!fieldErrors.walletAddress}
                     />
+                    <Form.Text className="text-muted">
+                      Must match the manufacturer wallet registered on-chain.
+                    </Form.Text>
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.walletAddress}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Form.Group
@@ -183,11 +228,15 @@ const AdminDashboardAddManufacturer = () => {
                   <Col sm={8}>
                     <Form.Control
                       name="emailID"
-                      type="text"
+                      type="email"
                       placeholder="Enter Enter Email"
                       onChange={handleChange}
                       value={formData.emailID}
+                      isInvalid={!!fieldErrors.emailID}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.emailID}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Form.Group
@@ -201,11 +250,16 @@ const AdminDashboardAddManufacturer = () => {
                   <Col sm={8}>
                     <Form.Control
                       name="phoneNumber"
-                      type="number"
+                      type="text"
+                      inputMode="numeric"
                       placeholder="Enter Phone Number"
                       onChange={handleChange}
                       value={formData.phoneNumber}
+                      isInvalid={!!fieldErrors.phoneNumber}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.phoneNumber}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Form.Group
@@ -223,12 +277,16 @@ const AdminDashboardAddManufacturer = () => {
                       placeholder="Enter Address"
                       onChange={handleChange}
                       value={formData.address}
+                      isInvalid={!!fieldErrors.address}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {fieldErrors.address}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <Col sm={12} className="text-center">
-                  <Button variant="primary" type="submit">
-                    Submit
+                  <Button variant="primary" type="submit" disabled={submitting}>
+                    {submitting ? "Submitting…" : "Submit"}
                   </Button>
                 </Col>
               </Form>

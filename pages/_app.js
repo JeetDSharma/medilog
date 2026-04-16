@@ -1,11 +1,12 @@
 import "./styles.css"
 import "bootstrap/dist/css/bootstrap.min.css"
 import Head from "next/head"
+import { WalletRoleProvider } from "../contexts/WalletRoleContext"
 
 // This default export is required in a new `pages/_app.js` file.
 export default function MyApp({ Component, pageProps }) {
   return (
-    <>
+    <WalletRoleProvider>
       <Head>
         <meta name="keywords" content="title, meta, nextjs" />
         <title>MediLog</title>
@@ -18,6 +19,6 @@ export default function MyApp({ Component, pageProps }) {
         />
       </Head>
       <Component { ...pageProps } />
-    </>
+    </WalletRoleProvider>
   )
 }

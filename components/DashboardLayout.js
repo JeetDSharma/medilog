@@ -6,6 +6,7 @@ import SideBarDoctor from "./sideBar/SideBarDoctorDash"
 import SideBarManufacturer from "./sideBar/SideBarManufacturerDash"
 import SideBarPatient from "./sideBar/SideBarPatientDash"
 import SideBarPharmacy from "./sideBar/SideBarPharmacyDash"
+import { RoleAccessGate } from "./RoleAccessPanel"
 import styles from "../public/static/css/components/DashboardLayout.module.css"
 
 const sidebars = {
@@ -33,7 +34,7 @@ const DashboardLayout = ({ role = "admin", children }) => {
             className={ styles.dashCanvas }
             data-m54-dashboard="true"
           >
-            { children }
+            <RoleAccessGate role={ role }>{ children }</RoleAccessGate>
           </div>
         </Col>
       </Row>

@@ -1,6 +1,12 @@
 import React from "react"
 import Link from "next/link"
 import styles from "../public/static/css/components/Footer.module.css"
+import {
+  NAV_PLATFORM_LINKS,
+  NAV_OPERATIONS,
+  FOOTER_PLATFORM_TITLE,
+  FOOTER_OPERATIONS_TITLE,
+} from "../lib/navConfig"
 
 const Footer = () => {
   const year = new Date().getFullYear()
@@ -16,24 +22,20 @@ const Footer = () => {
             </p>
           </div>
           <div className={ styles.colLinks }>
-            <span className={ styles.colTitle }>Quick links</span>
+            <span className={ styles.colTitle }>{ FOOTER_PLATFORM_TITLE }</span>
+            <ul className={ styles.linkList }>
+              { NAV_PLATFORM_LINKS.map(({ href, label }) => (
+                <li key={ href }>
+                  <Link href={ href }>{ label }</Link>
+                </li>
+              )) }
+            </ul>
+          </div>
+          <div className={ styles.colLinks }>
+            <span className={ styles.colTitle }>{ FOOTER_OPERATIONS_TITLE }</span>
             <ul className={ styles.linkList }>
               <li>
-                <Link href="/manufacturer/ManufacturerDashboard">
-                  Manufacturer
-                </Link>
-              </li>
-              <li>
-                <Link href="/doctor/DoctorDashboard">Doctor</Link>
-              </li>
-              <li>
-                <Link href="/pharmacy/PharmacyDashboard">Pharmacy</Link>
-              </li>
-              <li>
-                <Link href="/patient/PatientDashboard">Patient</Link>
-              </li>
-              <li>
-                <Link href="/adminPages/AdminDashboard">Admin</Link>
+                <Link href={ NAV_OPERATIONS.href }>{ NAV_OPERATIONS.label }</Link>
               </li>
             </ul>
           </div>
